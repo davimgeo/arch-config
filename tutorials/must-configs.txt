@@ -1,0 +1,18 @@
+## Needed configurations for day to day usage
+
+> go to /etc/pacman.conf
+> uncomment this:
+> # [multilib]
+> # Include = /etc/pacman.d/mirrorlist
+
+> this enables executed 32bit programs to be run on 64bit
+
+obs: required to download steam
+
+# Start i3 on boot
+# checks parameters inside TTY
+# Premise: there's an autologin
+> go to ~/.<profile_text_of_the_shell_you_chose> and copy this:
+> [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
+
+

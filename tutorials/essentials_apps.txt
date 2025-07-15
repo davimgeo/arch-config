@@ -1,0 +1,24 @@
+## Essential programs to install after the instalation
+
+sudo pacman -Sy discord flameshot
+
+# Controls mouse dpi and LED
+sudo pacman -S ratbagd
+> Ex:
+> ratbagctl list
+> ratbagctl <device> dpi set 1600
+
+[ Note: needs multilib enabled, check tutorial/must-configs.txt ]
+sudo pacman -Sy steam
+
+# install AUR
+sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+
+# install brave from AUR
+yay -S brave-bin
+
+## Least important, but good to have
+
+sudo pacman -S fastfetch
+
+
