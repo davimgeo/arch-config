@@ -24,20 +24,6 @@ or select and choose other font of your choice:
 localectl list-keymaps
 ```
 
-## Update the system clock
-
-List of all timezones:
-
-```
-timedatectl list-timezones
-```
-
-Set your timezone:
-
-```
-timedatectl set-timezone <your-timezone> 
-```
-
 ## Wi-fi
 
 Authenticate to the wireless network using iwctl
@@ -80,6 +66,20 @@ Then set a password for your ISO environment
 
 ```
 passwd
+```
+
+## Update the system clock
+
+List of all timezones:
+
+```
+timedatectl list-timezones
+```
+
+Set your timezone:
+
+```
+timedatectl set-timezone <your-timezone> 
 ```
 
 ## Write random data (optional)
@@ -127,10 +127,10 @@ To create a new partition use the `n` command.
 
 To delete all partitions use the `o` command. 
 
-### Btfrs + Dual-Boot
+### btrfs + Dual-Boot
 
 If you want dual-boot, make sure to create a partition
-for your other OS. Here's an example of Btfrs setup + Dual-boot:
+for your other OS. Here's an example of btrfs setup + Dual-boot:
 
 | partition | first sector | last sector | code |
 |-----------|--------------|-------------|------|
@@ -181,7 +181,7 @@ chmod 000 /etc/keys/*
 
 ## Format Partitions
 
-Format main into btfrs filesystem:
+Format main into btrfs filesystem:
 
 ```
 mkfs.btrfs /dev/mapper/main
@@ -214,7 +214,7 @@ nvme0n1     259:0    0  476.9G  0 disk
 
 TODO: i need to copy with my real instalation
 
-## Create BTFRS subpartitions
+## Create btrfs subpartitions
 
 Mount main partition into /mnt:
 
@@ -231,13 +231,13 @@ cd /mnt
 Create root subvolume:
 
 ```
-btfrs subvolume create @
+btrfs subvolume create @
 ```
 
 Create home subvolume:
 
 ```
-btfrs subvolume create @home
+btrfs subvolume create @home
 ```
 
 Go back into your root directory:
@@ -258,6 +258,12 @@ TODO: description for this
 mount -o noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@ /dev/mapper/main /mnt
 ```
 
+Create home directory:
+
+```
+mkdir /mnt/home
+```
+
 TODO: description for this
 
 ```
@@ -269,13 +275,13 @@ mount -o noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@home /de
 Create the EFI directory:
 
 ```
-mkdir /mnt/boot/efi
+mkdir -p /mnt/boot
 ```
 
 Mount the EFI directory:
 
 ```
-mount /dev/nvme0n1p1 /mnt/boot/efi
+mount /dev/nvme0n1p1 /mnt/boot
 ```
 
 ## Linux instalation
@@ -343,7 +349,7 @@ pacman -S nvim
 Open:
 
 ```
-nvim /mnt/etc/locale.gen 
+nvim /etc/locale.gen 
 ```
 
 Uncomment the `en_US.UTF-8 UTF-8` and other UTF-8 locales or your choice
@@ -442,29 +448,7 @@ If you want to be simple, just install:
 pacman -S lightdm lightdm-gtk-greeter
 ```
 
-I'll choose Ly, but choose one to your liking
-
-```
-cd /opt
-```
-```
-git clone https://aur.archlinux.org/ly.git
-```
-```
-cd ly
-```
-```
-makepkg -si
-```
-
-Prepare .xinitrc:
-
-```
-echo "exec qtile" > /home/<your-username>/.xinitrc 
-```
-```
-chown <your-username>:users /home/<your-username>/.xinitrc
-```
+You can install a login manager after the installation
 
 ### Desktop Manager
 
@@ -473,6 +457,7 @@ If you want to keep it simples, just install gnome:
 ```
 pacman -S gnome
 ```
+
 However, I'll install dwm
 
 Install X11 server:
@@ -502,7 +487,7 @@ make
 make install
 ```
 
-Install dmenu(recomended):
+Install dmenu(recomended if you installed dwm):
 
 ```
 cd /opt
@@ -551,7 +536,7 @@ HOOKS=(... blocks encrypt filesystems ...)
 If you created a keyfile[direct to keyfile section]:
 
 ```
-FILES=(/secure/root_keyfile.bin)
+FILES=(/etc/keys/root.key)
 ```
 
 Run:
@@ -565,7 +550,7 @@ mkinitcpio -P linux
 Run:
 
 ```
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=GRUB
 ```
 
 Create grub config file:
@@ -614,16 +599,7 @@ systemctl enable NetworkManager
 systemctl enable bluetooth
 ```
 ```
-systemctl enable reflection.timer
-```
-```
-systemctl enable wireplumber.service
-```
-
-If you chose Ly:
-
-```
-systemctl enable ly.service
+systemctl enable reflector.timer
 ```
 
 If you chose gnome:

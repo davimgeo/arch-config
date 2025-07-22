@@ -1,0 +1,17 @@
+I'll choose Ly, but choose one to your liking
+
+cd /opt
+
+git clone https://aur.archlinux.org/ly.git
+
+cd ly
+
+makepkg -si
+
+Prepare .xinitrc:
+
+echo "exec qtile" > /home/<your-username>/.xinitrc 
+
+chown <your-username>:users /home/<your-username>/.xinitrc
+
+
