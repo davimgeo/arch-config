@@ -616,6 +616,9 @@ systemctl enable bluetooth
 ```
 systemctl enable reflection.timer
 ```
+```
+systemctl enable wireplumber.service
+```
 
 If you chose Ly:
 
