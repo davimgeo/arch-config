@@ -135,7 +135,7 @@ for your other OS. Here's an example of btrfs setup + Dual-boot:
 | partition | first sector | last sector | code |
 |-----------|--------------|-------------|------|
 | 1         | default      | +512M       | ef00 |
-| 2         | default      | +256GB      | Code for your OS |
+| 2         | default      | +256GB      | 0700 |
 | 3         | default      | default     | 8300 |
 
 **That's will be my disk setup I'll use for the rest of the tutorial**
