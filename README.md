@@ -388,17 +388,124 @@ echo "<your-username> ALL=(ALL) ALL" >> /etc/sudoers.d/<your-username>
 
 ## Instaling aditional packages
 
-```
-passwd <your-username>
-```
+### Essential aditional packages:
 
 ```
-passwd <your-username>
+pacman -S base-devel btrfs-progs grub efibootmgr networkmanager iptables-nft  pipewire pirewire-pulse alsa-utils wireplumber alacritty
+```
+
+### Microcode(esssential)
+
+If you use intel:
+
+```
+pacman -S intel-ucode
+```
+
+or AMD:
+
+```
+pacman -S amd-ucode
+```
+
+### Not-essential, but recommended:
+
+```
+pacman -S bluez blue-utils reflector ipset firewalld git
+```
+
+### Login Manager
+
+If you want to be simple, just install:
+
+```
+pacman -S lightdm lightdm-gtk-greeter
+```
+
+I'll choose Ly, but choose one to your liking
+
+```
+cd /opt
+```
+```
+git clone https://aur.archlinux.org/ly.git
+```
+```
+cd ly
+```
+```
+makepkg -si
+```
+
+Enable Ly into boot
+
+```
+systemctl enable ly.service
+```
+
+Prepare .xinitrc:
+
+```
+echo "exec qtile" > /home/<your-username>/.xinitrc 
+```
+```
+chown <your-username>:users /home/<your-username>/.xinitrc
+```
+
+### Desktop Manager
+
+If you want to keep it simples, just install gnome:
+
+```
+pacman -S gnome
+```
+```
+systemctl enable gdm
+```
+
+However, I'll install dwm
+
+Clone it:
+
+```
+cd /opt
+```
+```
+git clone https://git.suckless.org/dwm
+```
+```
+cd dwm
+```
+
+Install and Build:
+
+```
+make
+```
+```
+make install
+```
+
+Set .xinitrc:
+
+```
+echo "exec dwm" > /home/<your-username>/.xinitrc
+```
+```
+chown <your-username>:users /home/<your-username>/.xinitrc
+```
+
+## Update mkinitcpio
+
+```
+nvim /etc/mkinitcpio.conf
 ```
 
 
-```
-passwd <your-username>
-```
+
+
+
+
+
 
 
