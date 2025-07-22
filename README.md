@@ -159,6 +159,26 @@ Create encripted partition:
 cryptsetup open /dev/nvme0n1p2 main
 ```
 
+## Keyfile(optional)
+
+Create a keyfile to open your partition
+
+```
+mkdir -P /etc/keys
+```
+
+Create and encrypt the key:
+
+```
+dd if=/dev/random of=/etc/keys/root.key bs=512 count=8
+```
+
+Change permissions:
+
+```
+chmod 000 /etc/keys/*
+```
+
 ## Format Partitions
 
 Format main into btfrs filesystem:
@@ -437,12 +457,6 @@ cd ly
 makepkg -si
 ```
 
-Enable Ly into boot
-
-```
-systemctl enable ly.service
-```
-
 Prepare .xinitrc:
 
 ```
@@ -459,13 +473,15 @@ If you want to keep it simples, just install gnome:
 ```
 pacman -S gnome
 ```
-```
-systemctl enable gdm
-```
-
 However, I'll install dwm
 
-Clone it:
+Install X11 server:
+
+```
+pacman -S xorg xorg-xinit
+```
+
+Install dwm:
 
 ```
 cd /opt
@@ -475,6 +491,27 @@ git clone https://git.suckless.org/dwm
 ```
 ```
 cd dwm
+```
+
+Install and Build:
+
+```
+make
+```
+```
+make install
+```
+
+Install dmenu(recomended):
+
+```
+cd /opt
+```
+```
+git clone https://git.suckless.org/dmenu
+```
+```
+cd dmenu
 ```
 
 Install and Build:
@@ -501,11 +538,108 @@ chown <your-username>:users /home/<your-username>/.xinitrc
 nvim /etc/mkinitcpio.conf
 ```
 
+Edit the follow:
+
+```
+MODULES=(btrfs)
+```
+
+```
+HOOKS=(... blocks encrypt filesystems ...)
+```
+
+If you created a keyfile[direct to keyfile section]:
+
+```
+FILES=(/secure/root_keyfile.bin)
+```
+
+Run:
+
+```
+mkinitcpio -P linux
+```
+
+## Set up GRUB
+
+Run:
+
+```
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
+```
+
+Create grub config file:
+
+```
+grub mkconfig -o /boot/grub/grub.cfg
+```
+
+Move your UUID to your grub file:
+
+```
+blkid /dev/nvme0n1p2 >> /etc/default/grub
+```
+Search it in the botton of the file and use it for the next step
+
+Edit it:
+
+```
+nvim /etc/default/grub
+```
+
+Edit the follow:
+
+```
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet cryptdevice=UUID=<your-UUID>:main root=/dev/mapper/main"
+```
+
+If you set up a keyfile:
+
+```
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet cryptdevice=UUID=<your-UUID>:main cryptkey=rootfs:/etc/keys/root.key root=/dev/mapper/main"
+```
+
+Update grub config file:
+
+```
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+## Enable System Utilities
+
+```
+systemctl enable NetworkManager
+```
+```
+systemctl enable bluetooth
+```
+```
+systemctl enable reflection.timer
+```
+
+If you chose Ly:
+
+```
+systemctl enable ly.service
+```
+
+If you chose gnome:
+
+```
+systemctl enable gdm
+```
+
+## Reboot
+
+Exit chroot and reboot:
 
 
-
-
-
-
-
-
+```
+exit
+```
+```
+umount -R /mnt
+```
+```
+reboot
+```
