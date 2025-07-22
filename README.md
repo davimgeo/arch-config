@@ -135,8 +135,8 @@ for your other OS. Here's an example of Btfrs setup + Dual-boot:
 | partition | first sector | last sector | code |
 |-----------|--------------|-------------|------|
 | 1         | default      | +512M       | ef00 |
-| 2         | default      | default     | 8309 |
-| 3         | default      | +256GB      | Code for your OS |
+| 2         | default      | +256GB      | Code for your OS |
+| 3         | default      | default     | 8300 |
 
 **That's will be my disk setup I'll use for the rest of the tutorial**
 
@@ -145,7 +145,7 @@ If you do not want dual-boot, just doesn't create the this extra +250GB partitio
 ## Encryption
 
 ```
-cryptsetup luksFormat -v -s 512 -h sha512 /dev/nvme0n1p2
+cryptsetup luksFormat -v -s 512 -h sha512 /dev/nvme0n1p3
 ```
 
 Create a strong password for your disk. And **KEEP IT SAFE**
@@ -156,7 +156,7 @@ There's no way to recover your data if you lost this password
 Create encrypted partition: 
 
 ```
-cryptsetup open /dev/nvme0n1p2 main
+cryptsetup open /dev/nvme0n1p3 main
 ```
 
 ## Keyfile(optional)
@@ -208,7 +208,7 @@ sda           8:0    1   28.7G  0 disk
 └─sda1        8:1    1   28.7G  0 part  
 nvme0n1     259:0    0  476.9G  0 disk  
 ├─nvme0n1p1 259:3    0      1G  0 part  
-└─nvme0n1p2 259:4    0  475.9G  0 part  
+└─nvme0n1p3 259:4    0  475.9G  0 part  
   └─main     254:0   0  475.9G  0 crypt
 ```
 
@@ -577,7 +577,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 Move your UUID to your grub file:
 
 ```
-blkid /dev/nvme0n1p2 >> /etc/default/grub
+blkid /dev/nvme0n1p3 >> /etc/default/grub
 ```
 Search it in the botton of the file and use it for the next step
 
