@@ -1,4 +1,4 @@
-# Arch Linux Instalation Guide
+# Arch Linux Installation Guide
 
 Keywords: full disk encryption, luks, btfs, dual-boot, single-disk
 
@@ -127,7 +127,7 @@ To create a new partition use the `n` command.
 
 To delete all partitions use the `o` command. 
 
-### Btfts + Dual-Boot
+### Btfrs + Dual-Boot
 
 If you want dual-boot, make sure to create a partition
 for your other OS. Here's an example of Btfrs setup + Dual-boot:
@@ -136,7 +136,7 @@ for your other OS. Here's an example of Btfrs setup + Dual-boot:
 |-----------|--------------|-------------|------|
 | 1         | default      | +512M       | ef00 |
 | 2         | default      | default     | 8309 |
-| 3         | default      | +256GB      | idk what code |
+| 3         | default      | +256GB      | Code for your OS |
 
 **That's will be my disk setup I'll use for the rest of the tutorial**
 
@@ -153,7 +153,7 @@ Create a strong password for your disk. And **KEEP IT SAFE**
 There's no way to recover your data if you lost this password
 
 
-Create encripted partition: 
+Create encrypted partition: 
 
 ```
 cryptsetup open /dev/nvme0n1p2 main
@@ -351,7 +351,7 @@ Uncomment the `en_US.UTF-8 UTF-8` and other UTF-8 locales or your choice
 Create locale.conf:
 
 ```
-locale.gen
+locale-gen
 ```
 
 Set your locale to english:
@@ -411,7 +411,7 @@ echo "<your-username> ALL=(ALL) ALL" >> /etc/sudoers.d/<your-username>
 ### Essential aditional packages:
 
 ```
-pacman -S base-devel btrfs-progs grub efibootmgr networkmanager iptables-nft  pipewire pirewire-pulse alsa-utils wireplumber alacritty
+pacman -S base-devel btrfs-progs grub efibootmgr networkmanager iptables-nft  pipewire pipewire-pulse alsa-utils wireplumber alacritty
 ```
 
 ### Microcode(esssential)
@@ -431,7 +431,7 @@ pacman -S amd-ucode
 ### Not-essential, but recommended:
 
 ```
-pacman -S bluez blue-utils reflector ipset firewalld git
+pacman -S bluez bluez-utils reflector ipset firewalld git
 ```
 
 ### Login Manager
@@ -571,7 +571,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB
 Create grub config file:
 
 ```
-grub mkconfig -o /boot/grub/grub.cfg
+grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 Move your UUID to your grub file:
@@ -632,7 +632,6 @@ systemctl enable gdm
 ## Reboot
 
 Exit chroot and reboot:
-
 
 ```
 exit
