@@ -401,7 +401,7 @@ echo "KEYMAP=br-abnt2" >> /etc/vconsole.conf
 It will be name of your machine
 
 ```
-echo "your-hostname" >> /etc/hostname
+echo "<your-hostname>" >> /etc/hostname
 ```
 
 Set a password for the root:
@@ -433,8 +433,10 @@ passwd <your-username>
 Run:
 
 ```
-echo "<your-username> ALL=(ALL) ALL" >> /etc/sudoers.d/<your-username>
+EDITOR=<your-text-editor> visudo
 ```
+
+and uncomment the line `%wheel ALL=(ALL:ALL) ALL`
 
 ## Instaling aditional packages
 
