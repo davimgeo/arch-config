@@ -421,7 +421,7 @@ pacman -S zsh
 Add a user:
 
 ```
-useradd -m -g users -G wheel -s /bin/<your-shell> <your-username>
+useradd -m -U -G wheel -s /bin/<your-shell> <your-username>
 ```
 
 Create a password for your user:
@@ -493,10 +493,7 @@ pacman -S xorg xorg-xinit
 Install dwm:
 
 ```
-cd /opt
-```
-```
-git clone https://git.suckless.org/dwm
+git clone https://git.suckless.org/dwm ~/.dwm
 ```
 ```
 cd dwm
