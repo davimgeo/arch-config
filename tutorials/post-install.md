@@ -129,3 +129,52 @@ sudo systemctl enable ly.service
 ```
 
 And `reboot`.
+
+## Install paru
+
+```
+sudo pacman -S --needed base-devel && git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -si
+```
+
+## Install auto-cpufreq
+
+```
+paru -S auto-cpufreq
+```
+
+And eable it:
+
+```
+sudo systemctl enable --now auto-cpufreq.service
+```
+
+## Install timeshift (really important)
+
+```
+sudo pacman -S timeshift
+```
+
+edit this grub-btrfsd file:
+
+```
+sudo EDITOR=/usr/bin/nvim systemctl edit --full grub-btrfsd
+```
+
+and change the following:
+
+```
+ExecStart=/usr/bin/grub/btrfsd --syslog -t
+```
+
+check snapshots, and schedule periodicy in `sudo timeshift-gtk`
+> settings > schedule
+
+update grub-mkconfig:
+
+```
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+if it worked, next time you see the grub menu
+
+you will have an option `Arch Linux Snapshots`
