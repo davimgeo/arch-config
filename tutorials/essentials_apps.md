@@ -1,6 +1,7 @@
-## Essential programs to install after the instalation
+# Essential programs to install after the instalation
 
-# best terminal markdown reader
+## Best terminal markdown reader
+
 sudo pacman -S glow
 > Ex:
 > glow README.md
@@ -17,11 +18,12 @@ sudo pacman -S ratbagd
 [ Note: needs multilib enabled, check tutorial/must-configs.txt ]
 sudo pacman -Sy steam
 
-# install AUR
-sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+## Install paru
+
+sudo pacman -S --needed base-devel && git clone https://aur.archlinux.org/paru.git && cd paru && makepkg -si
 
 # install brave from AUR
-yay -S brave-bin
+paru -S brave-bin
 
 ## Least important, but good to have
 
