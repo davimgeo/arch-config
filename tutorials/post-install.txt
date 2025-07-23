@@ -1,3 +1,19 @@
+Set keyfile:
+
+# Create keyfile for paswordless login
+dd bs=512 count=4 if=/dev/urandom of=/crypto_keyfile.bin
+cryptsetup luksAddKey /dev/sda1 /crypto_keyfile.bin
+and add to /etc/mkinitcpio.conf
+FILES=(/crypto_keyfile.bin)
+# run:
+mkinitcpio -p linux
+# Reboot again, you’ll only need to enter your password once.
+reboot
+
+# Secure keyfile and /boot
+chmod 000 /crypto_keyfile.bin  # actually, even root doesn't need to access this
+chmod -R g-rwx,o-rwx /boot     # just to be safe
+
 I'll choose Ly, but choose one to your liking
 
 cd /opt
