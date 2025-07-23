@@ -452,63 +452,7 @@ If you want to keep it simples, just install gnome:
 pacman -S gnome
 ```
 
-However, I'll install dwm
-
-Install required dependencies:
-
-```
-pacman -S xorg-server xorg-xinit libx11 libxinerama ttf-dejavu
-```
-
-Install st:
-
-```
-git clone https://git.suckless.org/st ~/st
-```
-
-Open directory and build it:
-
-```
-cd ~/st
-make clean install
-```
-
-Install dwm:
-
-```
-git clone https://git.suckless.org/dwm ~/dwm
-```
-
-Open directory and build it:
-
-```
-cd ~/dwm
-make clean install
-```
-
-Open `~/dwm/config.h` and change the line that starts with #define SHCMD(cmd)
-
-and change the path for the path you installed st(you can check it with `which st`)
-
-and make sure to do `make clean install` again to update your changes
-
-Install dmenu(really recomended if you installed dwm):
-
-```
-pacman -S dmenu
-```
-
-Set .xinitrc:
-
-```
-echo "exec dwm" >> /home/<your-user>/.xinitrc
-```
-
-Make it run automatically when start:
-
-```
-echo "startx" >> /home/<your-user>/.zprofile
-```
+You can also install the desktop manager after the installation
 
 ## Update mkinitcpio
 
