@@ -154,6 +154,8 @@ for your other OS. Here's an example of btrfs setup + Dual-boot:
 
 If you do not want dual-boot, just doesn't create the this extra +250GB partition
 
+Type `w` to write the changes.
+
 ## Encryption
 
 ```
