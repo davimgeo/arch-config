@@ -220,22 +220,12 @@ Enter /mnt:
 cd /mnt
 ```
 
-Create root subvolume:
+### Create subvolumes:
 
 ```
 btrfs subvolume create @
-```
-
-Create home subvolume:
-
-```
 btrfs subvolume create @home
-```
-
-Go back into your root directory:
-
-```
-cd
+btrfs subvolume create @snapshots
 ```
 
 Umount /mnt folder:
@@ -246,20 +236,19 @@ umount /mnt
 
 TODO: description for this
 
-```
-mount -o noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@ /dev/mapper/main /mnt
-```
-
-Create home directory:
+### Mount options
 
 ```
-mkdir -p /mnt/home
+o=defaults,x-mount.mkdir
+o_btrfs=$o,compress=zstd,ssd,noatime,nodiratime,space_cache
 ```
 
-TODO: description for this
+### Remount the partitions:
 
 ```
-mount -o noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@home /dev/mapper/main /mnt/home
+mount -o compress=lzo,subvol=@,$o_btrfs /dev/mapper/main /mnt
+mount -o compress=lzo,subvol=@home,$o_btrfs /dev/mapper/main /mnt/home
+mount -o compress=lzo,subvol=@snapshots,$o_btrfs /dev/mapper/main /mnt/.snapshots
 ```
 
 ## Mount EFI partition
@@ -411,7 +400,7 @@ and uncomment the line `%wheel ALL=(ALL:ALL) ALL`
 ### Essential aditional packages:
 
 ```
-pacman -S base-devel btrfs-progs grub efibootmgr networkmanager iptables-nft  pipewire pipewire-pulse alsa-utils wireplumber alacritty
+pacman -S base-devel btrfs-progs grub grub-btrfs efibootmgr networkmanager pipewire pipewire-pulse alsa-utils wireplumber alacritty
 ```
 
 ### Microcode(esssential)
@@ -431,7 +420,7 @@ pacman -S amd-ucode
 ### Not-essential, but recommended:
 
 ```
-pacman -S bluez bluez-utils reflector ipset firewalld git
+pacman -S bluez bluez-utils reflector git xclip fastfetch
 ```
 
 ### Login Manager (optional)
