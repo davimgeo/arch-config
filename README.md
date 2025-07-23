@@ -312,38 +312,6 @@ Now we will interact with your system environment
 arch-chroot /mnt
 ```
 
-## Keyfile(optional)
-
-Create a keyfile to open your partition
-
-```
-mkdir -p /boot/keys
-```
-
-Create and encrypt the key:
-
-```
-dd if=/dev/random of=/boot/keys/root.key bs=512 count=8
-```
-
-Change permissions:
-
-```
-chmod 600 /boot/keys/*
-```
-
-Add keyfile:
-
-```
-cryptsetup luksAddKey /dev/nvme0n1p3 /boot/keys/root.key
-```
-
-You can test it to check if it's working:
-
-```
-cryptsetup luksOpen /dev/nvme0n1p3 testkey --key-file /boot/keys/root.key
-```
-
 ## Set Time
 
 Change "Region/City" for your respective region/city (cf. Set Timezone)
@@ -412,7 +380,7 @@ passwd
 
 ## Username
 
-Download zsh shell(optional)
+Download zsh shell
 
 ```
 pacman -S zsh
@@ -421,7 +389,7 @@ pacman -S zsh
 Add a user:
 
 ```
-useradd -m -U -G wheel -s /bin/<your-shell> <your-username>
+useradd -m -U -G wheel -s /bin/zsh <your-username>
 ```
 
 Create a password for your user:
@@ -486,58 +454,60 @@ pacman -S gnome
 
 However, I'll install dwm
 
-Install X11 server:
+Install required dependencies:
 
 ```
-pacman -S xorg xorg-xinit
+pacman -S xorg-server xorg-xinit libx11 libxinerama ttf-dejavu
+```
+
+Install st:
+
+```
+git clone https://git.suckless.org/st ~/st
+```
+
+Open directory and build it:
+
+```
+cd ~/st
+make clean install
 ```
 
 Install dwm:
 
 ```
-git clone https://git.suckless.org/dwm ~/.dwm
-```
-```
-cd dwm
+git clone https://git.suckless.org/dwm ~/dwm
 ```
 
-Install and Build:
+Open directory and build it:
 
 ```
-make
-```
-```
-make install
+cd ~/dwm
+make clean install
 ```
 
-Install dmenu(recomended if you installed dwm):
+Open `~/dwm/config.h` and change the line that starts with #define SHCMD(cmd)
+
+and change the path for the path you installed st(you can check it with `which st`)
+
+and make sure to do `make clean install` again to update your changes
+
+Install dmenu(really recomended if you installed dwm):
 
 ```
-cd /opt
-```
-```
-git clone https://git.suckless.org/dmenu
-```
-```
-cd dmenu
-```
-
-Install and Build:
-
-```
-make
-```
-```
-make install
+pacman -S dmenu
 ```
 
 Set .xinitrc:
 
 ```
-echo "exec dwm" > /home/<your-username>/.xinitrc
+echo "exec dwm" >> /home/<your-user>/.xinitrc
 ```
+
+Make it run automatically when start:
+
 ```
-chown <your-username>:users /home/<your-username>/.xinitrc
+echo "startx" >> /home/<your-user>/.zprofile
 ```
 
 ## Update mkinitcpio
@@ -552,14 +522,10 @@ Edit the follow:
 MODULES=(btrfs)
 ```
 
+Change hooks:
+
 ```
 HOOKS=(... blocks encrypt filesystems ...)
-```
-
-If you created a keyfile[direct to keyfile section]:
-
-```
-FILES=(/boot/keys/root.key)
 ```
 
 Run:
@@ -601,12 +567,6 @@ Edit the follow:
 GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet cryptdevice=UUID=<your-UUID>:main root=/dev/mapper/main"
 ```
 
-If you set up a keyfile:
-
-```
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet cryptdevice=UUID=<your-UUID>:main cryptkey=rootfs:/boot/keys/root.key root=/dev/mapper/main"
-```
-
 Update grub config file:
 
 ```
@@ -623,6 +583,12 @@ systemctl enable bluetooth
 ```
 ```
 systemctl enable reflector.timer
+```
+
+Enable audio for your user:
+
+```
+systemctl --user enable pipewire pipewire-pulse wireplumber
 ```
 
 If you chose gnome:
@@ -644,3 +610,5 @@ umount -R /mnt
 ```
 reboot
 ```
+
+Now enjoy your Arch Linux :)
