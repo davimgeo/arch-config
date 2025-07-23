@@ -54,16 +54,16 @@ If wlan0 is Powered off, check [TODO]
 
 Make sure to enter in your password
 
-Check connection with:
-
-```
-ping archlinux.org
-```
-
 exit when complete
 
 ```
 exit
+```
+
+Check connection with:
+
+```
+ping archlinux.org
 ```
 
 ## SSH (optional)
