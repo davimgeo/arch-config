@@ -342,7 +342,7 @@ You can test it to check if it's working:
 
 ```
 cryptsetup luksOpen /dev/nvme0n1p3 testkey --key-file /boot/keys/root.key
-``
+```
 
 ## Set Time
 
