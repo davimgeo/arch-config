@@ -98,9 +98,7 @@ timedatectl set-timezone <your-timezone>
 
 It's a secure way of erasing your data before instaling the OS
 
-it's also a slow process, so do it only if you want to be sure your
-
-data is deleted.
+it's also a slow process, so do it only if you want to be sure your data is deleted.
 
 List your block devices. Usually they are such as /dev/sda, /dev/nvme0n1 or /dev/mmcblk0
 
