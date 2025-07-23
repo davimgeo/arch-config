@@ -71,7 +71,7 @@ cd ~/dwm
 make clean install
 ```
 
-Open `~/dwm/config.h` and change the line that starts with #define SHCMD(cmd)
+Open `~/.dwm/config.h` and change the line that starts with #define SHCMD(cmd)
 
 and change the path for the path you installed st(you can check it with `which st`)
 
@@ -119,12 +119,21 @@ fi
 
 ## Instaling Ly 
 
+```
 git clone https://aur.archlinux.org/ly.git ~/ly
+```
 
+Open directory and build it:
+
+```
 cd ly
-
 makepkg -si
+```
 
-Prepare .xinitrc:
+### Prepare .xinitrc:
 
+```
 sudo systemctl enable ly.service
+```
+
+And `reboot`.
