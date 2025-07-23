@@ -1,18 +1,9 @@
 # Essential programs to install after the instalation
 
-## Best terminal markdown reader
-
-```
-sudo pacman -S glow
-```
-
-> Ex:
-> glow README.md
-
 ## Important apps
 
 ```
-sudo pacman -Sy discord flameshot
+sudo pacman -Sy flameshot
 ```
 
 ## Controls mouse dpi and LED
@@ -21,10 +12,10 @@ sudo pacman -Sy discord flameshot
 sudo pacman -S ratbagd
 ```
 
-> Ex:
-> ratbagctl list
-> ratbagctl "your_device" dpi set 1600
-> ratbagctl "your_device" led 0 set mode off
+- Ex:
+- ratbagctl list
+- ratbagctl "your_device" dpi set 1600
+- ratbagctl "your_device" led 0 set mode off
 
 [ Note: needs multilib enabled, check tutorial/must-configs.txt ]
 
@@ -42,11 +33,5 @@ sudo pacman -S --needed base-devel && git clone https://aur.archlinux.org/paru.g
 
 ```
 paru -S brave-bin
-```
-
-## Least important, but good to have
-
-```
-sudo pacman -S fastfetch
 ```
 
