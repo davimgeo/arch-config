@@ -32,10 +32,22 @@ Authenticate to the wireless network using iwctl
 iwctl
 ```
 
-If your device name is wlan0, connect using the following command
+Check if your device name is wlan:
 
 ```
-station wlan0 connect <SSID>
+device list
+```
+
+Check wifi list:
+
+```
+station wlan0 get-networks 
+```
+
+Connect to a wifi:
+
+```
+station wlan0 connect <your-wifi>
 ```
 
 If wlan0 is Powered off, check [TODO]
@@ -159,26 +171,6 @@ Create encrypted partition:
 cryptsetup open /dev/nvme0n1p3 main
 ```
 
-## Keyfile(optional)
-
-Create a keyfile to open your partition
-
-```
-mkdir -P /etc/keys
-```
-
-Create and encrypt the key:
-
-```
-dd if=/dev/random of=/etc/keys/root.key bs=512 count=8
-```
-
-Change permissions:
-
-```
-chmod 000 /etc/keys/*
-```
-
 ## Format Partitions
 
 Format main into btrfs filesystem:
@@ -203,16 +195,16 @@ It should be something like:
 
 ```
 NAME        MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
-loop0         7:0    0  795.7M  1 loop  /run/archiso/airootfs
-sda           8:0    1   28.7G  0 disk  
-└─sda1        8:1    1   28.7G  0 part  
-nvme0n1     259:0    0  476.9G  0 disk  
-├─nvme0n1p1 259:3    0      1G  0 part  
-└─nvme0n1p3 259:4    0  475.9G  0 part  
-  └─main     254:0   0  475.9G  0 crypt
+loop0         7:0    0 942.7M  1 loop  /run/archiso/airootfs
+sda           8:0    1    15G  0 disk
+├─sda1        8:1    1   1.1G  0 part
+└─sda2        8:2    1   179M  0 part
+nvme0n1     259:0    0 238.5G  0 disk
+├─nvme0n1p1 259:1    0   512M  0 part
+├─nvme0n1p2 259:2    0   256G  0 part
+└─nvme0n1p3 259:3    0   110G  0 part
+  └─main    253:0    0   110G  0 crypt
 ```
-
-TODO: i need to copy with my real instalation
 
 ## Create btrfs subpartitions
 
@@ -261,7 +253,7 @@ mount -o noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@ /dev/ma
 Create home directory:
 
 ```
-mkdir /mnt/home
+mkdir -p /mnt/home
 ```
 
 TODO: description for this
@@ -319,6 +311,38 @@ Now we will interact with your system environment
 ```
 arch-chroot /mnt
 ```
+
+## Keyfile(optional)
+
+Create a keyfile to open your partition
+
+```
+mkdir -p /boot/keys
+```
+
+Create and encrypt the key:
+
+```
+dd if=/dev/random of=/boot/keys/root.key bs=512 count=8
+```
+
+Change permissions:
+
+```
+chmod 600 /boot/keys/*
+```
+
+Add keyfile:
+
+```
+cryptsetup luksAddKey /dev/nvme0n1p3 /boot/keys/root.key
+```
+
+You can test it to check if it's working:
+
+```
+cryptsetup luksOpen /dev/nvme0n1p3 testkey --key-file /boot/keys/root.key
+``
 
 ## Set Time
 
@@ -440,7 +464,7 @@ pacman -S amd-ucode
 pacman -S bluez bluez-utils reflector ipset firewalld git
 ```
 
-### Login Manager
+### Login Manager (optional)
 
 If you want to be simple, just install:
 
@@ -536,7 +560,7 @@ HOOKS=(... blocks encrypt filesystems ...)
 If you created a keyfile[direct to keyfile section]:
 
 ```
-FILES=(/etc/keys/root.key)
+FILES=(/boot/keys/root.key)
 ```
 
 Run:
@@ -581,7 +605,7 @@ GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet cryptdevice=UUID=<your-UUID>:main r
 If you set up a keyfile:
 
 ```
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet cryptdevice=UUID=<your-UUID>:main cryptkey=rootfs:/etc/keys/root.key root=/dev/mapper/main"
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet cryptdevice=UUID=<your-UUID>:main cryptkey=rootfs:/boot/keys/root.key root=/dev/mapper/main"
 ```
 
 Update grub config file:
