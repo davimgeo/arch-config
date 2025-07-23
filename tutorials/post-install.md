@@ -48,7 +48,7 @@ pacman -S xorg-server xorg-xinit xorg-fonts-misc libx11 libxinerama
 ### Install st:
 
 ```
-git clone https://git.suckless.org/st ~/.st
+git clone https://git.suckless.org/st ~/.config/st
 ```
 
 Open directory and build it:
@@ -61,7 +61,7 @@ make clean install
 ### Install dwm:
 
 ```
-git clone https://git.suckless.org/dwm ~/.dwm
+git clone https://git.suckless.org/dwm ~/.config/dwm
 ```
 
 Open directory and build it:
@@ -112,7 +112,7 @@ echo "startx" >> /home/<your-user>/.zprofile
 ## Instaling Ly 
 
 ```
-git clone https://aur.archlinux.org/ly.git ~/ly
+git clone https://aur.archlinux.org/ly.git ~/.config/ly
 ```
 
 Open directory and build it:
@@ -134,6 +134,12 @@ And `reboot`.
 
 ```
 sudo pacman -S --needed base-devel && git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -si
+```
+
+Remove the folder(optional)
+
+```
+rm -fr paru-bin
 ```
 
 ## Install auto-cpufreq
