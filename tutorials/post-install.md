@@ -109,14 +109,6 @@ Make it run automatically when start:
 echo "startx" >> /home/<your-user>/.zprofile
 ```
 
-or edit it /home/your-user/.zprofile and put the following to be more solid:
-
-```
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
-  exec startx
-fi
-```
-
 ## Instaling Ly 
 
 ```
