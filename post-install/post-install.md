@@ -10,6 +10,20 @@ Then:
 nmcli device wifi connect "<WIFI-NAME>" password "<PASSWORD>"
 ```
 
+## Set up ssh again(optional)
+
+```
+sudo pacman -S openssh
+```
+
+```
+sudo systemctl start sshd
+sudo systemctl enable sshd
+```
+
+Check your ipv6 in `ip addr` then connect in other computer
+with `ssh <your-username>@<your-ipv6>`
+
 ## Set keyfile:
 
 ### Create keyfile for paswordless login
