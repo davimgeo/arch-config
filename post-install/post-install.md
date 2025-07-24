@@ -151,7 +151,7 @@ Open directory and build it:
 
 ```
 cd ly
-sudo makepkg -si
+makepkg -si
 ```
 
 ### Prepare .xinitrc:
@@ -165,7 +165,7 @@ And `reboot`.
 ## Install paru
 
 ```
-sudo pacman -S --needed base-devel && git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && sudo sudo makepkg -si
+sudo pacman -S --needed base-devel && git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -si
 ```
 
 Remove the folder(optional)
