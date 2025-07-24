@@ -234,20 +234,23 @@ Umount /mnt folder:
 umount /mnt
 ```
 
-TODO: description for this
-
-### Mount folders
-
-```
-mkdir -p /mnt/home
-mkdir -p /mnt/.snapshots
-```
-
-### Remount the partitions:
+### Mount root
 
 ```
 mount -o noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@ /dev/mapper/main /mnt
+```
+
+### Mount home
+
+```
+mkdir /mnt/home
 mount -o noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@home /dev/mapper/main /mnt/home
+```
+
+### Mount snapshots
+
+```
+mkdir -p /mnt/.snapshots
 mount -o noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@snapshots /dev/mapper/main /mnt/.snapshots
 ```
 
