@@ -236,19 +236,19 @@ umount /mnt
 
 TODO: description for this
 
-### Mount options
+### Mount folders
 
 ```
-o=defaults,x-mount.mkdir
-o_btrfs=$o,compress=zstd,ssd,noatime,nodiratime,space_cache
+mkdir -p /mnt/home
+mkdir -p /mnt/.snapshots
 ```
 
 ### Remount the partitions:
 
 ```
-mount -o compress=lzo,subvol=@,$o_btrfs /dev/mapper/main /mnt
-mount -o compress=lzo,subvol=@home,$o_btrfs /dev/mapper/main /mnt/home
-mount -o compress=lzo,subvol=@snapshots,$o_btrfs /dev/mapper/main /mnt/.snapshots
+mount -o noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@ /dev/mapper/main /mnt
+mount -o noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@home /dev/mapper/main /mnt/home
+mount -o noatime,ssd,compress=zstd,space_cache=v2,discard=async,subvol=@snapshots /dev/mapper/main /mnt/.snapshots
 ```
 
 ## Mount EFI partition
