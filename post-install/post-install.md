@@ -87,7 +87,7 @@ Open directory and build it:
 
 ```
 cd ~/.config/st
-make clean install
+sudo make clean install
 ```
 
 ### Install dwm:
@@ -100,7 +100,7 @@ Open directory and build it:
 
 ```
 cd ~/.config/dwm
-make clean install
+sudo make clean install
 ```
 
 Open `~/.dwm/config.h` and change the line that starts with #define SHCMD(cmd)
@@ -126,7 +126,7 @@ Open directory and build it:
 
 ```
 cd ~/.config/dmenu
-make clean install
+sudo make clean install
 ```
 
 Set .xinitrc:
