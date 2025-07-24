@@ -29,13 +29,13 @@ with `ssh <your-username>@<your-ipv6>`
 ### Create keyfile for paswordless login
 
 ```
-dd bs=512 count=4 if=/dev/urandom of=/crypto_keyfile.bin
+sudo dd bs=512 count=4 if=/dev/urandom of=/crypto_keyfile.bin
 ```
 
 ### Add keyfile to encrypted disk
 
 ```
-cryptsetup luksAddKey /dev/nvme0n1p3 /crypto_keyfile.bin
+sudo cryptsetup luksAddKey /dev/nvme0n1p3 /crypto_keyfile.bin
 ```
 
 and add to /etc/mkinitcpio.conf the folowwing:
@@ -47,7 +47,7 @@ FILES=(/crypto_keyfile.bin)
 Then run:
 
 ```
-mkinitcpio -p linux
+sudo mkinitcpio -p linux
 ```
 
 Reboot again, you’ll only need to enter your password once.
@@ -59,8 +59,8 @@ reboot
 ### Secure keyfile and /boot
 
 ```
-chmod 000 /crypto_keyfile.bin
-chmod -R g-rwx,o-rwx /boot
+sudo chmod 000 /crypto_keyfile.bin
+sudo chmod -R g-rwx,o-rwx /boot
 ```
 
 ## Instaling DWM
@@ -68,7 +68,7 @@ chmod -R g-rwx,o-rwx /boot
 Install required dependencies:
 
 ```
-pacman -S xorg-server xorg-xinit xorg-fonts-misc libx11 libxinerama 
+sudo pacman -S xorg-server xorg-xinit xorg-fonts-misc libx11 libxinerama 
 ```
 
 ### Install st:
@@ -204,7 +204,7 @@ check snapshots, and schedule periodicy in `sudo timeshift-gtk`
 update grub-mkconfig:
 
 ```
-grub-mkconfig -o /boot/grub/grub.cfg
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 if it worked, next time you see the grub menu
