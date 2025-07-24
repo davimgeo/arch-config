@@ -86,7 +86,7 @@ git clone https://git.suckless.org/st ~/.config/st
 Open directory and build it:
 
 ```
-cd ~/.st
+cd ~/.config/st
 make clean install
 ```
 
@@ -99,7 +99,7 @@ git clone https://git.suckless.org/dwm ~/.config/dwm
 Open directory and build it:
 
 ```
-cd ~/dwm
+cd ~/.config/dwm
 make clean install
 ```
 
@@ -119,13 +119,13 @@ and make sure to do `make clean install` again to update your changes
 ### Install dmenu(really recomended if you installed dwm):
 
 ```
-git clone https://git.suckless.org/dmenu ~/.dmenu
+git clone https://git.suckless.org/dmenu ~/.config/dmenu
 ```
 
 Open directory and build it:
 
 ```
-cd ~/dmenu
+cd ~/.config/dmenu
 make clean install
 ```
 
