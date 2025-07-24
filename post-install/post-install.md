@@ -1,3 +1,15 @@
+## Set up wi-fi again
+
+```
+nmcli device wifi list
+```
+
+Then:
+
+```
+nmcli device wifi connect "<WIFI-NAME>" password "<PASSWORD>"
+```
+
 ## Set keyfile:
 
 ### Create keyfile for paswordless login
