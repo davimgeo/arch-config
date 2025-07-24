@@ -103,7 +103,7 @@ cd ~/.config/dwm
 sudo make clean install
 ```
 
-Open `~/.dwm/config.h` and change the line that starts with #define SHCMD(cmd)
+Open `sudo nvim ~/.config/dwm/config.h` and change the line that starts with #define SHCMD(cmd)
 
 and change the path for the path you installed st(you can check it with `which st`)
 
