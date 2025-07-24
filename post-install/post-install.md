@@ -38,7 +38,13 @@ sudo dd bs=512 count=4 if=/dev/urandom of=/crypto_keyfile.bin
 sudo cryptsetup luksAddKey /dev/nvme0n1p3 /crypto_keyfile.bin
 ```
 
-and add to /etc/mkinitcpio.conf the folowwing:
+edit mkinitcpio.conf:
+
+```
+sudo nvim /etc/mkinitcpio.conf
+```
+
+and add the following:
 
 ```
 FILES=(/crypto_keyfile.bin)
