@@ -74,7 +74,7 @@ sudo chmod -R g-rwx,o-rwx /boot
 Install required dependencies:
 
 ```
-sudo pacman -S xorg-server xorg-xinit xorg-fonts-misc libx11 libxft libxinerama 
+sudo pacman -S xorg-server xorg-xinit xorg-fonts-misc xorg-xsetroot libx11 libxft libxinerama 
 ```
 
 ### Install st:
