@@ -7,13 +7,11 @@ mkdir -p dots
 
 # DWM
 rm -fr dots/dwm && cp -r ~/.config/dwm dots/ && \
-  rm -rf dots/dwm/.git && \
   printf "$OK Copied dwm files successfully into dots/\n" || \
   printf "$FAILED Could not copy dwm files into dots/\n"
 
 # Alacritty
 rm -fr dots/alacritty && cp -r ~/.config/alacritty dots/ && \
-  rm -rf dots/alacritty/.git && \
   printf "$OK Copied alacritty files successfully into dots/\n" || \
   printf "$FAILED Could not copy alacritty files into dots/\n"
 
