@@ -1,0 +1,30 @@
+# Setting up Keyfile
+
+MODULES=(btrfs ext4 nls_cp437 nls_ascii usb_storage xhci_pci)
+FILES=(/bin/luks-unlock)
+HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block luks-unlock encrypt filesystems fsck)
+BINARIES=(/bin/mount /usr/bin/blkid)
+
+# You need to create a custom hook "luks-unlock" inside `/etc/initcpio/hooks`
+
+#!/usr/bin/bash
+
+run_hook() {
+        /bin/luks-unlock > /crypto_keyfile.bin
+}
+
+and in `etc/initcpio/hooks`
+
+#!/usr/bin/bash
+
+build() {
+        add_binary "/bin/luks-unlock"
+        add_file "/bin/luks-unlock" "/bin/luks-unlock"
+        add_runscript
+}
+
+help () {
+        cat <<HELPOF
+        Custom unlock script for LUKS
+HELPOF
+}
