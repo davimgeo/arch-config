@@ -5,7 +5,7 @@ FILES=(/bin/luks-unlock)
 HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block luks-unlock encrypt filesystems fsck)
 BINARIES=(/bin/mount /usr/bin/blkid)
 
-# You need to create a custom hook "luks-unlock" inside `/etc/initcpio/hooks`
+# You need to create a custom hook "luks-unlock" inside `/etc/initcpio/hooks/`
 
 #!/usr/bin/bash
 
@@ -13,7 +13,7 @@ run_hook() {
         /bin/luks-unlock > /crypto_keyfile.bin
 }
 
-and in `etc/initcpio/hooks`
+and in `etc/initcpio/install/`
 
 #!/usr/bin/bash
 
@@ -27,4 +27,5 @@ help () {
         cat <<HELPOF
         Custom unlock script for LUKS
 HELPOF
+
 }
