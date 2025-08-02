@@ -7,14 +7,15 @@ FILES=(/bin/luks-unlock)
 HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block luks-unlock encrypt filesystems fsck)
 BINARIES=(/bin/mount /usr/bin/blkid)
 
+# do mkdir /mnt/usbkey
 # Create /bin/luks-unlock and paste this:
 
 #!/bin/sh
 
 set -e
 
-KEYFILE_NAME="keyfile"  # Adjust if your key file has a different name
-MNTPOINT="/mnt/usb"
+KEYFILE_NAME="crypto_keyfile.bin"  # Adjust if your key file has a different name
+MNTPOINT="/mnt/usbkey"
 
 log_msg() {
     echo "[luks-unlock] $1" > /dev/kmsg
@@ -88,6 +89,7 @@ HELPOF
 }
 
 and make it executable: `chmod +x /etc/initcpio/install/luks-unlock`
+
 
 
 
