@@ -1,5 +1,7 @@
 # Setting up Keyfile
 
+in `/etc/default/grub`, uncomment: "GRUB_ENABLE_CRYPTODISK=y"
+
 MODULES=(btrfs ext4 nls_cp437 nls_ascii usb_storage xhci_pci)
 FILES=(/bin/luks-unlock)
 HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block luks-unlock encrypt filesystems fsck)
@@ -85,4 +87,5 @@ HELPOF
 }
 
 and make it executable: `chmod +x /etc/initcpio/install/luks-unlock`
+
 
