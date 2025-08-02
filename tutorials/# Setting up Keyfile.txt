@@ -5,6 +5,58 @@ FILES=(/bin/luks-unlock)
 HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block luks-unlock encrypt filesystems fsck)
 BINARIES=(/bin/mount /usr/bin/blkid)
 
+# Create /bin/luks-unlock and paste this:
+
+#!/bin/sh
+
+set -e
+
+KEYFILE_NAME="keyfile"  # Adjust if your key file has a different name
+MNTPOINT="/mnt/usbkey"
+
+log_msg() {
+    echo "[luks-unlock] $1" > /dev/kmsg
+}
+
+log_msg "===== Starting luks-unlock script ====="
+
+mkdir -p "$MNTPOINT"
+
+for dev in /dev/disk/by-id/usb-*; do
+    realdev=$(readlink -f "$dev" 2>/dev/null || true)
+    [ -b "$realdev" ] || continue
+
+    log_msg "Checking device: $realdev"
+
+    for part in "${realdev}"*; do
+        [ -b "$part" ] || continue
+        log_msg "Attempting to mount: $part"
+
+        if mount -t vfat "$part" "$MNTPOINT" 2>/dev/null || mount -t ext4 "$part" "$MNTPOINT" 2>/dev/null; then
+            log_msg "Mounted $part at $MNTPOINT"
+
+            if [ -f "$MNTPOINT/$KEYFILE_NAME" ]; then
+                log_msg "Keyfile found! Outputting contents..."
+                cat "$MNTPOINT/$KEYFILE_NAME"
+                umount "$MNTPOINT"
+                log_msg "Unmounted $part — success"
+                exit 0
+            else
+                log_msg "Keyfile not found on $part"
+            fi
+
+            umount "$MNTPOINT"
+            log_msg "Unmounted $part"
+        else
+            log_msg "Failed to mount $part"
+        fi
+    done
+done
+
+log_msg "No keyfile found on any USB device. Falling back to password prompt"
+exit 1
+
+
 # You need to create a custom hook "luks-unlock" inside `/etc/initcpio/hooks/`
 
 #!/usr/bin/bash
@@ -16,8 +68,6 @@ run_hook() {
 and make it executable: `chmod +x /etc/initcpio/hooks/luks-unlock`
 
 and in `etc/initcpio/install/`
-
-and make it executable: `chmod +x /etc/initcpio/install/luks-unlock`
 
 #!/usr/bin/bash
 
@@ -33,4 +83,6 @@ help () {
 HELPOF
 
 }
+
+and make it executable: `chmod +x /etc/initcpio/install/luks-unlock`
 
