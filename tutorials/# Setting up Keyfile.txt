@@ -13,7 +13,11 @@ run_hook() {
         /bin/luks-unlock > /crypto_keyfile.bin
 }
 
+and make it executable: `chmod +x /etc/initcpio/hooks/luks-unlock`
+
 and in `etc/initcpio/install/`
+
+and make it executable: `chmod +x /etc/initcpio/install/luks-unlock`
 
 #!/usr/bin/bash
 
@@ -29,3 +33,4 @@ help () {
 HELPOF
 
 }
+
