@@ -1,27 +1,45 @@
-Try changing the framebuffer in grub config, do
+# How to setup HDMI on NVIDIA-Optimus
+
+In NVIDIA-Optimus, GPU usually handles the HDMI output
+so we need to install nvidia drivers, and also configure 
+xrandr so we can tell Arch to use NVIDIA port for HDMI
+
+## Install nvidia drivers
 
 ```
-cat /proc/fb
+sudo pacman -S nvidia nvidia-utils nvidia-settings
 ```
 
-to check the actives framebuffers, ex:
+Update mkinitcpio and grub
+
 
 ```
-0 inteldrmfb
-1 nouveau
+sudo mkinitcpio -P linux
+grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-then add the following to `sudo nvim /etc/default/grub` 
+and `sudo reboot` (necessary)
+
+### Checking if its working
+
+Check the available providers in xrandr
 
 ```
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet ... fbcon=map:1"
+xrandr --listproviders
 ```
 
-map:1 if you want the second framebuffer, and map:0 if you want the first.
+if it says "NVIDIA-G0", its working.
 
-map:1 works for me.
+## Output to HDMI
 
-Laptop lid configuration (ignore when close)
+Add to .xinitrc:
+
+```
+xrandr --setprovideroutputsource NVIDIA-G0 modesetting
+xrandr --auto
+```
+
+### Laptop lid configuration (ignore when close)
 
 ```
 sudo nvim /etc/systemd/logind.conf
@@ -33,7 +51,3 @@ And change the following:
 HandleLidSwitch=ignore
 HandleLidSwitchDocked=ignore
 ```
-
-and `reboot`
-
-Source: https://unix.stackexchange.com/questions/193470/how-do-i-change-which-monitor-the-tty-shows-up-on
