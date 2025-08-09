@@ -5,10 +5,10 @@ FAILED="[ \033[1;31mFailed\033[0m ]"
 
 mkdir -p dots
 
-# DWM
-rm -fr dots/dwm && cp -r ~/.config/dwm dots/ && \
-  printf "$OK Copied dwm files successfully into dots/\n" || \
-  printf "$FAILED Could not copy dwm files into dots/\n"
+# I3
+rm -fr dots/i3 && cp -r ~/.config/i3 dots/ && \
+  printf "$OK Copied I3 files successfully into dots/\n" || \
+  printf "$FAILED Could not copy I3 files into dots/\n"
 
 # Alacritty
 rm -fr dots/alacritty && cp -r ~/.config/alacritty dots/ && \

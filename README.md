@@ -444,12 +444,6 @@ If you want to keep it simples, just install gnome:
 pacman -S gnome
 ```
 
-or 
-
-```
-pacman -S i3-gaps
-```
-
 You can also install the desktop manager after the installation
 
 ## Update mkinitcpio
