@@ -21,6 +21,9 @@ PROMPT="%{$BOLDBLUE%}%~%{$RESET%} %{$BOLDGREEN%}>%{$RESET%} "
 alias czsh="sudo nvim ~/.zshrc"
 alias uzsh="source ~/.zshrc"
 
+# nvim configs
+alias cnvim="nvim ~/.config/nvim/"
+
 # Alacritty configs
 alias cala="sudo nvim ~/.config/alacritty/alacritty.toml"
 

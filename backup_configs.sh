@@ -10,6 +10,11 @@ rm -fr dots/i3 && cp -r ~/.config/i3 dots/ && \
   printf "$OK Copied I3 files successfully into dots/\n" || \
   printf "$FAILED Could not copy I3 files into dots/\n"
 
+# nvim
+rm -fr dots/nvim && cp -r ~/.config/nvim dots/ && \
+  printf "$OK Copied nvim files successfully into dots/\n" || \
+  printf "$FAILED Could not copy nvim files into dots/\n"
+
 # Alacritty
 rm -fr dots/alacritty && cp -r ~/.config/alacritty dots/ && \
   printf "$OK Copied alacritty files successfully into dots/\n" || \

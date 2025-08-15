@@ -29,11 +29,10 @@ decorations = "Full"
 decorations_theme_variant = "Light" # "Dark"
 
 [font]
-
-normal.family = "Monocraft"
-bold.family = "Monocraft"
-italic.family = "Monocraft"
-bold_italic.family = "Monocraft"
+normal.family = "JetBrainsMono Nerd Font"
+bold.family = "JetBrainsMono Nerd Font"
+italic.family = "JetBrainsMono Nerd Font"
+bold_italic.family = "JetBrainsMono Nerd Font"
 
 size = 14.0
 
