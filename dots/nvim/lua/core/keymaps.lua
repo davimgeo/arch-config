@@ -8,6 +8,11 @@ vim.opt.shiftwidth = 2
 vim.opt.shiftround = true
 vim.opt.expandtab = true
 
+-- Line numbers
+vim.opt.number = true
+--vim.opt.relativenumber = true
+
+-- Close tab
 vim.keymap.set('n', '<leader>x', ':bd<CR>',
               { noremap = true, silent = true })
 
