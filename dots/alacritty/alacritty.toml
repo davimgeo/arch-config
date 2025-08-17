@@ -29,10 +29,10 @@ decorations = "Full"
 decorations_theme_variant = "Light" # "Dark"
 
 [font]
-normal.family = "JetBrainsMono Nerd Font"
-bold.family = "JetBrainsMono Nerd Font"
-italic.family = "JetBrainsMono Nerd Font"
-bold_italic.family = "JetBrainsMono Nerd Font"
+normal.family = "Ubuntu Mono Nerd Font"
+bold.family = "Ubuntu Mono Nerd Font"
+italic.family = "Ubuntu Mono Nerd Font"
+bold_italic.family = "Ubuntu Mono Nerd Font"
 
 size = 14.0
 
