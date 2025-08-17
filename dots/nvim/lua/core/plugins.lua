@@ -11,6 +11,13 @@ return require('packer').startup(function(use)
   use 'nvim-tree/nvim-web-devicons'
   use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
   use {
+      "windwp/nvim-autopairs",
+      event = "InsertEnter",
+      config = function()
+          require("nvim-autopairs").setup {}
+      end
+  }
+  use {
     'nvim-telescope/telescope.nvim', tag = '0.1.8',
     requires = { {'nvim-lua/plenary.nvim'} }
   }

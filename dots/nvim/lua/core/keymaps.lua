@@ -10,7 +10,13 @@ vim.opt.expandtab = true
 
 -- Line numbers
 vim.opt.number = true
---vim.opt.relativenumber = true
+vim.opt.relativenumber = true
+
+-- safe buffer when leave
+vim.api.nvim_create_autocmd({"BufLeave"}, {
+  pattern = "*",
+  command = "silent! update"
+})
 
 -- Close tab
 vim.keymap.set('n', '<leader>x', ':bd<CR>',
