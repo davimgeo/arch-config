@@ -18,7 +18,8 @@ vim.api.nvim_create_autocmd({"BufLeave"}, {
   command = "silent! update"
 })
 
--- Close tab
-vim.keymap.set('n', '<leader>x', ':bd<CR>',
+-- Close tab and save buffer
+vim.keymap.set('n', '<leader>x', ':update | bd<CR>', 
               { noremap = true, silent = true })
+
 
