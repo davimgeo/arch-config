@@ -6,8 +6,7 @@ nmcli device wifi list
 
 Then:
 
-```
-nmcli device wifi connect "<WIFI-NAME>" password "<PASSWORD>"
+``` nmcli device wifi connect "<WIFI-NAME>" password "<PASSWORD>"
 ```
 
 ## Set up ssh again(optional)
@@ -216,3 +215,9 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 if it worked, next time you see the grub menu
 
 you will have an option `Arch Linux Snapshots`
+
+## Install Latexmk
+
+```
+sudo pacman -S texlive-binextra
+```
