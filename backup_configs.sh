@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 # *****************
 # Backup dotfiles
 # *****************
@@ -15,32 +15,25 @@ HOME_DIRS=(
 
 BACKUP_DIR="dots"
 
-function backup_item() 
+OK="[ \033[1;32mOK\033[0m ]"
+FAILED="[ \033[1;31mFailed\033[0m ]"
+
+function backup_nvim()
 {
-  # colored msgs for debug
-  local OK="[ \033[1;32mOK\033[0m ]"
-  local FAILED="[ \033[1;31mFailed\033[0m ]"
+  echo -n "Do you want to backup nvim? (Y/N): "
+  read confirm_backup
 
-  local src=$1
-
-  rm -rf "$BACKUP_DIR/$src"
-  cp -r "$src" "$BACKUP_DIR/"
-
-  # extract just the filename or directory name from path
-  local src_filtered="${src##*/}"
-
-  if [[ $? -eq 0 ]]; then
-    printf "$OK Copied $src_filtered file successfully into $BACKUP_DIR/\n" \
-    || printf "$FAILED Could not copy $src_filtered file into $BACKUP_DIR/\n"  
+  if [[ $confirm_backup == [nN] || $confirm_backup == [nN][oO] ]]; then
+      echo "Skipping nvim backup..."
+      return
+  else
+      echo "Continuing..."
   fi
+
+  printf "Copying nvim into arch_config...\n"
+  cp -r ~/.config/nvim/ ~/arch-config/ || { printf "%b Copying nvim into arch_config failed\n" "$FAILED"; exit 1; }
+
+  printf "%b Copied nvim into arch_config successfully.\n" "$OK"
 }
 
-# backup configs in .config/ directories
-for dot in "${CONFIG_DIRS[@]}"; do
-  backup_item "$HOME/.config/$dot"
-done
-
-# backup configs in home/ dir
-for dot in "${HOME_DIRS[@]}"; do 
-  backup_item "$HOME/$dot"
-done
+backup_nvim

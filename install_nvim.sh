@@ -50,10 +50,17 @@ function install_nvim_config()
     cp -r dots/nvim ~/.config || { printf "$FAILED Coping nvim config into .config failed\n"; exit 1; }
 
     echo "Installing Packer..."
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim\
-    ~/.local/share/nvim/site/pack/packer/start/packer.nvim || { printf "$FAILED Packer installation failed\n"; exit 1; }
 
-    
+    PACKER_DIR="$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
+
+    if [ -d "$PACKER_DIR" ]; then
+      echo "Packer already exists, overwriting..."
+      rm -rf "$PACKER_DIR"
+    fi
+
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim "$PACKER_DIR" \
+      || { printf "$FAILED Packer installation failed\n"; exit 1; }
+
 }
 
 install_nvim
