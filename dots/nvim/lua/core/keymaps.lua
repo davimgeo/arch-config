@@ -25,3 +25,11 @@ vim.keymap.set('n', '<leader>x', ':update | bd<CR>',
 -- Runs currently python code
 vim.api.nvim_set_keymap("n", "<localleader>pp", "<cmd>!uv run %<CR>",
               { noremap = false, silent = true })
+
+-- Copies into buffer with ctrl + c
+vim.api.nvim_set_keymap(
+  "v",          
+  "<C-c>",      
+  '"+y', 
+  { noremap = true, silent = true }
+)
