@@ -32,7 +32,7 @@ function install_zsh() {
   echo -n "Do you want to install zsh? (Y/N): "
   read confirm_install
 
-  if [[ $confirm_install != [nN] && $confirm_install != [nN][oO] ]]; then
+  if [[ $confirm_install != [yY] && $confirm_install != [yY][eE][sS] ]]; then
     echo "Skipping zsh instalation..."
     return
   fi
