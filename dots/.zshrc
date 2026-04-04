@@ -1,21 +1,36 @@
 # default editor
 export EDITOR=nvim
 
-alias xsc="xclip -selection clipboard"
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+autoload -U colors && colors
+PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+
+# History in cache directory:
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.cache/zsh/history
+
+# Basic auto/tab complete:
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)		# Include hidden files.
+
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^x^e' edit-command-line
+
+alias xsc="xclip -selection clipboard"
 
 # Basic Bash aliases
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
 # Prompt template
-BOLDGREEN=$(tput bold setaf 2)
-BOLDBLUE=$(tput bold setaf 4)
-RESET=$(tput sgr0)
 
-PROMPT="%{$BOLDBLUE%}%~%{$RESET%} %{$BOLDGREEN%}>%{$RESET%} "
 
 # .zshrc configs
 alias czsh="sudo nvim ~/.zshrc"
@@ -35,4 +50,10 @@ alias udwm='printf "Updating dwm file...\n"; cd ~/.config/dwm/ && sudo make clea
 # i3 configs
 alias fi3="cd ~/.config/i3"
 alias ci3="sudo nvim ~/.config/i3/config"
+
+chpwd() {
+  ls --color=auto
+}
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 

@@ -18,6 +18,24 @@ BACKUP_DIR="dots"
 OK="[ \033[1;32mOK\033[0m ]"
 FAILED="[ \033[1;31mFailed\033[0m ]"
 
+function backup_zsh()
+{
+  echo -n "Do you want to backup zsh? (Y/N): "
+  read confirm_backup
+
+  if [[ $confirm_backup == [nN] || $confirm_backup == [nN][oO] ]]; then
+      echo "Skipping zsh backup..."
+      return
+  else
+      echo "Continuing..."
+  fi
+
+  printf "Copying zsh into arch_config/dots...\n"
+  cp -r ~/.zshrc ~/arch-config/dots/ || { printf "%b Copying zsh into arch_config failed\n" "$FAILED"; exit 1; }
+
+  printf "%b Copied zsh into arch_config successfully.\n" "$OK"
+}
+
 function backup_nvim()
 {
   echo -n "Do you want to backup nvim? (Y/N): "
@@ -36,4 +54,5 @@ function backup_nvim()
   printf "%b Copied nvim into arch_config successfully.\n" "$OK"
 }
 
+backup_zsh
 backup_nvim
