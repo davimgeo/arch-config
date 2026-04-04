@@ -22,4 +22,6 @@ vim.api.nvim_create_autocmd({"BufLeave"}, {
 vim.keymap.set('n', '<leader>x', ':update | bd<CR>', 
               { noremap = true, silent = true })
 
-
+-- Runs currently python code
+vim.api.nvim_set_keymap("n", "<localleader>pp", "<cmd>!uv run %<CR>",
+              { noremap = false, silent = true })

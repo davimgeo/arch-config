@@ -1,44 +1,74 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
-
--- Only required if you have packer configured as `opt`
+-- Load packer if installed as opt
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-  -- Packer can manage itself
+  --  Packer 
   use 'wbthomason/packer.nvim'
-  use 'ellisonleao/gruvbox.nvim'
-  use 'nvim-tree/nvim-tree.lua'
-  use 'nvim-tree/nvim-web-devicons'
+
+  -- gruvbox
+  use { "ellisonleao/gruvbox.nvim" }
+
+  --  file explorer
   use {
-    "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate",
+    'nvim-tree/nvim-tree.lua',
+    requires = { 'nvim-tree/nvim-web-devicons' }
+  }
+
+  use 'nvim-tree/nvim-web-devicons'
+
+  -- treesitter
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
     config = function()
-      require("core.plugin_config.treesitter")
+      require('nvim-treesitter.config').setup({
+        ensure_installed = {
+          'python',
+          'lua',
+          'toml',
+          'cpp',
+          'bash',
+        },
+        highlight = { enable = true },
+      })
     end
   }
+
+  --  telescope
+  use {
+    'nvim-telescope/telescope.nvim',
+    tag = '*',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+    }
+  }
+
+  use 'nvim-lua/plenary.nvim'
+
+  --  ui enhancements
+  use 'romgrk/barbar.nvim'      
   use 'lewis6991/gitsigns.nvim' 
-  use 'romgrk/barbar.nvim'
+
   use {
-      "windwp/nvim-autopairs",
-      event = "InsertEnter",
-      config = function()
-          require("nvim-autopairs").setup {}
-      end
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = function()
+      require("nvim-autopairs").setup {}
+    end
   }
-  use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.8',
-    requires = { {'nvim-lua/plenary.nvim'} }
-  }
+
+  -- lsp and autocomplete
   use {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v3.x',
     requires = {
-      -- LSP Support
+      -- LSP
       {'neovim/nvim-lspconfig'},
       {'williamboman/mason.nvim'},
       {'williamboman/mason-lspconfig.nvim'},
 
-      -- Autocompletion
+      -- Autocomplete
       {'hrsh7th/nvim-cmp'},
       {'hrsh7th/cmp-buffer'},
       {'hrsh7th/cmp-path'},
@@ -52,5 +82,5 @@ return require('packer').startup(function(use)
     }
   }
 
-
 end)
+

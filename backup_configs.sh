@@ -31,7 +31,7 @@ function backup_nvim()
   fi
 
   printf "Copying nvim into arch_config...\n"
-  cp -r ~/.config/nvim/ ~/arch-config/ || { printf "%b Copying nvim into arch_config failed\n" "$FAILED"; exit 1; }
+  cp -r ~/.config/nvim/ ~/arch-config/dots/ || { printf "%b Copying nvim into arch_config failed\n" "$FAILED"; exit 1; }
 
   printf "%b Copied nvim into arch_config successfully.\n" "$OK"
 }
