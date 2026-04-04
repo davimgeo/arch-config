@@ -13,7 +13,11 @@ HOME_DIRS=(
   .zshrc .zprofile .xinitrc
 )
 
-BACKUP_DIR="dots"
+function error() {
+  local text="$1"
+  printf "%b %s\n" "$FAILED" "$text"
+  exit 1
+}
 
 OK="[ \033[1;32mOK\033[0m ]"
 FAILED="[ \033[1;31mFailed\033[0m ]"
@@ -31,7 +35,7 @@ function backup_zsh()
   fi
 
   printf "Copying zsh into arch_config/dots...\n"
-  cp -r ~/.zshrc ~/arch-config/dots/ || { printf "%b Copying zsh into arch_config failed\n" "$FAILED"; exit 1; }
+  cp -r ~/.zshrc ~/arch-config/dots/ || error "%b Copying zsh into arch_config/dots failed\n" 
 
   printf "%b Copied zsh into arch_config successfully.\n" "$OK"
 }
@@ -49,7 +53,7 @@ function backup_nvim()
   fi
 
   printf "Copying nvim into arch_config...\n"
-  cp -r ~/.config/nvim/ ~/arch-config/dots/ || { printf "%b Copying nvim into arch_config failed\n" "$FAILED"; exit 1; }
+  cp -r ~/.config/nvim/ ~/arch-config/dots/ || error "%b Copying nvim into arch_config failed\n" 
 
   printf "%b Copied nvim into arch_config successfully.\n" "$OK"
 }

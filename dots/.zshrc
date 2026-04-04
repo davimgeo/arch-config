@@ -4,9 +4,6 @@ export EDITOR=nvim
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-autoload -U colors && colors
-PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
-
 # History in cache directory:
 HISTSIZE=10000
 SAVEHIST=10000
@@ -31,7 +28,6 @@ alias grep='grep --color=auto'
 
 # Prompt template
 
-
 # .zshrc configs
 alias czsh="sudo nvim ~/.zshrc"
 alias uzsh="source ~/.zshrc"
@@ -54,6 +50,12 @@ alias ci3="sudo nvim ~/.config/i3/config"
 chpwd() {
   ls --color=auto
 }
+
+bindkey -s '^[c' 'git commit -m ""\C-b'
+bindkey -s '^[p' 'git push origin '
+
+autoload -U colors && colors
+PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
