@@ -1,5 +1,12 @@
 #!/bin/bash
 
+dependencies=(
+  zoxide fzf curl 
+  unzip tar cmake
+  npm build-essential pkg-config libtool 
+  libtool-bin autoconf automake g++ clangd
+)
+
 OK="[ \033[1;32mOK\033[0m ]"
 FAILED="[ \033[1;31mFailed\033[0m ]"
 
@@ -7,6 +14,37 @@ function error() {
   local text="$1"
   printf "%b %s\n" "$FAILED" "$text"
   exit 1
+}
+
+function install_dependencies() {
+  local confirm_download
+
+  echo -n "Do you want to download the dependencies? (Y/N): "
+  read confirm_download
+
+  if [[ ! "$confirm_download" =~ ^([yY]|[yY][eE][sS])$ ]]; then
+    echo "Skipping dependencies installation."
+    return
+  fi
+
+  local missing=()
+
+  for lib in "${dependencies[@]}"; do
+    if ! command -v "$lib" >/dev/null 2>&1; then
+      missing+=("$lib")
+    fi
+  done
+
+  if [[ ${#missing[@]} -eq 0 ]]; then
+    printf "%b All dependencies already installed.\n" "$OK"
+    return
+  fi
+
+  echo "Installing: ${missing[*]}"
+  sudo apt update
+  sudo apt install -y "${missing[@]}" || error "Could not install dependencies"
+
+  printf "%b Dependencies installed successfully.\n" "$OK"
 }
 
 function install_zsh() {
@@ -105,6 +143,6 @@ function install_nvim() {
   printf "%b Neovim installation completed\n" "$OK"
 }
 
+install_dependencies
 install_zsh
-
 install_nvim
