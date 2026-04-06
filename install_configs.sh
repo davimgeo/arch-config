@@ -45,6 +45,59 @@ function install_dependencies() {
   sudo apt install -y "${missing[@]}" || error "Could not install dependencies"
 
   printf "%b Dependencies installed successfully.\n" "$OK"
+
+function install_nvim() {
+
+  local confirm_install=""
+  local confirm_skip=""
+
+  echo -n "Do you already have nvim 0.12.0 installed? (Y/N): "
+  read confirm_install
+
+  if [[ $confirm_install != [nN] && $confirm_install != [nN][oO] ]]; then
+    echo "Skipping Neovim install..."
+    return
+  fi
+
+  echo -n "Skip cloning nvim? (Y/N): "
+  read confirm_skip
+
+  if [[ $confirm_skip == [nN] || $confirm_skip == [nN][oO] ]]; then
+    echo "Cloning Neovim..."
+    git clone https://github.com/neovim/neovim.git $HOME/neovim || error "Clone failed"
+    printf "%b Downloaded nvim successfully\n" "$OK"
+  fi
+
+  echo "Proceeding to install Neovim..."
+
+  make -C ~/neovim CMAKE_BUILD_TYPE=RelWithDebInfo || error "Build failed"
+  sudo make -C ~/neovim install || error "Install failed"
+  printf "%b Installed nvim successfully\n" "$OK"
+
+  echo "Removing Neovim source folder..."
+  rm -fr ~/neovim || error "Removing Neovim folder failed"
+  printf "%b Removed Neovim folder successfully\n" "$OK"
+
+  echo "Copying Neovim config into ~/.config..."
+  cp -r dots/nvim ~/.config || error "Copying Neovim config failed"
+  printf "%b Copied Neovim config successfully\n" "$OK"
+
+  echo "Installing Packer..."
+  PACKER_DIR="$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
+
+  if [ -d "$PACKER_DIR" ]; then
+    echo "Packer already exists, removing old version..."
+    rm -rf "$PACKER_DIR"
+  fi
+
+  git clone --depth 1 https://github.com/wbthomason/packer.nvim "$PACKER_DIR" \
+    || error "Packer installation failed"
+
+  echo "Running PackerSync..."
+  nvim --headless +PackerSync +qa || error "PackerSync failed"
+  printf "%b PackerSync completed successfully\n" "$OK"
+
+  printf "%b Neovim installation completed\n" "$OK"
 }
 
 function install_zsh() {
@@ -79,70 +132,10 @@ function install_zsh() {
   cp dots/.zshrc ~ || error "Could not move .zshrc to ~"
 
   echo "Changing shell..."
-  sudo chsh -s /usr/bin/zsh malum || error "Could not change shell to zsh"
+  sudo chsh -s /usr/bin/zsh $USER || error "Could not change shell to zsh"
   zsh || error "Could not execute zsh"
 }
 
-function install_nvim() {
-
-  local confirm_install=""
-  local confirm_skip=""
-
-  echo -n "Do you already have nvim 0.12.0 installed? (Y/N): "
-  read confirm_install
-
-  if [[ $confirm_install != [nN] && $confirm_install != [nN][oO] ]]; then
-    echo "Skipping Neovim install..."
-    return
-  fi
-
-  echo -n "Skip cloning nvim? (Y/N): "
-  read confirm_skip
-
-  if [[ $confirm_skip == [nN] || $confirm_skip == [nN][oO] ]]; then
-    echo "Cloning Neovim..."
-    git clone https://github.com/neovim/neovim.git $HOME/neovim || error "Clone failed"
-    printf "%b Downloaded nvim successfully\n" "$OK"
-  fi
-
-  echo "Proceeding to install Neovim..."
-  NVIM_DIR="$HOME/neovim"
-
-  if [ -d "$NVIM_DIR" ]; then
-    echo "Neovim folder already exists, removing old version..."
-    rm -rf "$NVIM_DIR"
-  fi
-
-  make -C ~/neovim CMAKE_BUILD_TYPE=RelWithDebInfo || error "Build failed"
-  sudo make -C ~/neovim install || error "Install failed"
-  printf "%b Installed nvim successfully\n" "$OK"
-
-  echo "Removing Neovim source folder..."
-  rm -fr ~/neovim || error "Removing Neovim folder failed"
-  printf "%b Removed Neovim folder successfully\n" "$OK"
-
-  echo "Copying Neovim config into ~/.config..."
-  cp -r dots/nvim ~/.config || error "Copying Neovim config failed"
-  printf "%b Copied Neovim config successfully\n" "$OK"
-
-  echo "Installing Packer..."
-  PACKER_DIR="$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
-
-  if [ -d "$PACKER_DIR" ]; then
-    echo "Packer already exists, removing old version..."
-    rm -rf "$PACKER_DIR"
-  fi
-
-  git clone --depth 1 https://github.com/wbthomason/packer.nvim "$PACKER_DIR" \
-    || error "Packer installation failed"
-
-  echo "Running PackerSync..."
-  nvim --headless +PackerSync +qa || error "PackerSync failed"
-  printf "%b PackerSync completed successfully\n" "$OK"
-
-  printf "%b Neovim installation completed\n" "$OK"
-}
-
 install_dependencies
-install_zsh
 install_nvim
+install_zsh
