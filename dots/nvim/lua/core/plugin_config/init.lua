@@ -1,4 +1,6 @@
-require("core.plugin_config.gruvbox")
+--require("core.plugin_config.gruvbox")
+require("core.plugin_config.vscode")
+require("core.plugin_config.ufo")
 require("core.plugin_config.autocmp")
 require("core.plugin_config.tabs")
 require("core.plugin_config.nvim-tree")

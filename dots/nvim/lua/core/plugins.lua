@@ -6,7 +6,8 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- gruvbox
-  use { "ellisonleao/gruvbox.nvim" }
+  --use { "ellisonleao/gruvbox.nvim" }
+  use {'Mofiqul/vscode.nvim'}
 
   --  file explorer
   use {
@@ -15,6 +16,9 @@ return require('packer').startup(function(use)
   }
 
   use 'nvim-tree/nvim-web-devicons'
+
+  -- folding
+  use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 
   -- treesitter
   use {

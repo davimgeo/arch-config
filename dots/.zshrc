@@ -96,7 +96,8 @@ zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
 # Git shortcuts
-bindkey -s '^[c' 'git commit -m ""\C-b'
+bindkey -s '^[a' 'git add .'
+bindkey -s '^[cm' 'git commit -m ""\C-b'
 bindkey -s '^[p' 'git push origin '
 
 # ================================
@@ -130,9 +131,9 @@ alias ci3="sudo nvim ~/.config/i3/config"
 # ================================
 # Shell Integrations
 # ================================
-eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+eval "$(zoxide init zsh)"
 # ================================
 # Functions
 # ================================
@@ -145,3 +146,5 @@ chpwd() {
 # ================================
 # Load Powerlevel10k config if present
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

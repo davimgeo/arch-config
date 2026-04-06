@@ -2,7 +2,7 @@
 
 dependencies=(
   zoxide fzf curl 
-  unzip tar cmake
+  unzip tar cmake ripgrep
   npm build-essential pkg-config libtool 
   libtool-bin autoconf automake g++ clangd
 )
