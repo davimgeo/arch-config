@@ -71,6 +71,8 @@ return require('packer').startup(function(use)
       {'neovim/nvim-lspconfig'},
       {'williamboman/mason.nvim'},
       {'williamboman/mason-lspconfig.nvim'},
+      -- new adition
+      {"ray-x/lsp_signature.nvim"},
 
       -- Autocomplete
       {'hrsh7th/nvim-cmp'},

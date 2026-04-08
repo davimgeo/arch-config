@@ -88,3 +88,8 @@ cmp.setup({
     end,
   },
 })
+
+-- lsp signature 
+cfg = {}
+
+require'lsp_signature'.setup(cfg) 

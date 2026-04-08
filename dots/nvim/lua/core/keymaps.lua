@@ -91,3 +91,24 @@ end
 
 vim.keymap.set("n", "<C-j>", ToggleTerm, { silent = true })
 vim.keymap.set("t", "<C-j>", [[<C-\><C-n><cmd>lua ToggleTerm()<CR>]], { silent = true })
+
+-- change buffers
+ local function tab_n()
+  if vim.api.nvim_get_mode().mode == "t" then
+    vim.cmd("startinsert")
+  else
+    vim.cmd("bnext")
+  end
+end
+
+local function tab_p()
+  if vim.api.nvim_get_mode().mode == "t" then
+    vim.cmd("startinsert")
+  else
+    vim.cmd("bprevious")
+  end
+end
+
+vim.keymap.set("n", "<Tab>n", tab_n)
+vim.keymap.set("n", "<Tab>p", tab_p)
+
