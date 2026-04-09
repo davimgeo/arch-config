@@ -115,11 +115,11 @@ local modes = { "n", "i", "v" }
 vim.keymap.set(modes, "<Tab>n", tab_n, { silent = true })
 vim.keymap.set(modes, "<Tab>p", tab_p, { silent = true })
 
-vim.keymap.set(modes, "<leader>o", "<C-w>h", { silent = true })
-vim.keymap.set(modes, "<leader>p", "<C-w>l", { silent = true })
+vim.keymap.set(modes, "<Tab>i", "<C-w>h", { silent = true })
+vim.keymap.set(modes, "<Tab>o", "<C-w>l", { silent = true })
 
-vim.keymap.set("t", "<leader>o", [[<C-\><C-n><C-w>h]], { silent = true })
-vim.keymap.set("t", "<leader>p", [[<C-\><C-n><C-w>l]], { silent = true })
+vim.keymap.set("t", "<Tab>i", [[<C-\><C-n><C-w>h]], { silent = true })
+vim.keymap.set("t", "<Tab>o", [[<C-\><C-n><C-w>l]], { silent = true })
 
 for i = 1, 9 do
   vim.keymap.set(modes, "<M-" .. i .. ">", i .. "gt", { silent = true })
