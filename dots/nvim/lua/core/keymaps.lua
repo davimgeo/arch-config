@@ -72,18 +72,15 @@ function ToggleTerm()
     term_win = nil
     term_buf = nil
   else
-    vim.cmd("belowright split")
-    vim.cmd("resize 15")
-    vim.cmd("terminal")
+    vim.cmd("botright vsplit")
+    vim.cmd("vertical resize 60")
+
+    vim.cmd('terminal zsh -i -c "source ~/venv/bin/activate; exec zsh -i"')
 
     term_win = vim.api.nvim_get_current_win()
     term_buf = vim.api.nvim_get_current_buf()
 
-    vim.defer_fn(function()
-      if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
-        vim.api.nvim_chan_send(vim.b.terminal_job_id, "source ~/venv/bin/activate\n")
-      end
-    end, 100)
+    vim.api.nvim_buf_set_name(term_buf, "Terminal")
 
     vim.cmd("startinsert")
   end
@@ -93,22 +90,38 @@ vim.keymap.set("n", "<C-j>", ToggleTerm, { silent = true })
 vim.keymap.set("t", "<C-j>", [[<C-\><C-n><cmd>lua ToggleTerm()<CR>]], { silent = true })
 
 -- change buffers
- local function tab_n()
+local function leave_term_if_needed()
   if vim.api.nvim_get_mode().mode == "t" then
-    vim.cmd("startinsert")
-  else
-    vim.cmd("bnext")
+    vim.api.nvim_feedkeys(
+      vim.api.nvim_replace_termcodes("<C-\\><C-n>", true, false, true),
+      "n",
+      true
+    )
   end
+end
+
+local function tab_n()
+  leave_term_if_needed()
+  vim.cmd("bnext")
 end
 
 local function tab_p()
-  if vim.api.nvim_get_mode().mode == "t" then
-    vim.cmd("startinsert")
-  else
-    vim.cmd("bprevious")
-  end
+  leave_term_if_needed()
+  vim.cmd("bprevious")
 end
 
-vim.keymap.set("n", "<Tab>n", tab_n)
-vim.keymap.set("n", "<Tab>p", tab_p)
+local modes = { "n", "i", "v" }
+
+vim.keymap.set(modes, "<Tab>n", tab_n, { silent = true })
+vim.keymap.set(modes, "<Tab>p", tab_p, { silent = true })
+
+vim.keymap.set(modes, "<leader>o", "<C-w>h", { silent = true })
+vim.keymap.set(modes, "<leader>p", "<C-w>l", { silent = true })
+
+vim.keymap.set("t", "<leader>o", [[<C-\><C-n><C-w>h]], { silent = true })
+vim.keymap.set("t", "<leader>p", [[<C-\><C-n><C-w>l]], { silent = true })
+
+for i = 1, 9 do
+  vim.keymap.set(modes, "<M-" .. i .. ">", i .. "gt", { silent = true })
+end
 

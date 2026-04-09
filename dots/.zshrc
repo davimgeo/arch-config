@@ -97,7 +97,7 @@ bindkey '^x^e' edit-command-line
 
 # Git shortcuts
 bindkey -s '^[a' 'git add .'
-bindkey -s '^[cm' 'git commit -m ""\C-b'
+bindkey -s '^[ck' 'git commit -m ""\C-b'
 bindkey -s '^[p' 'git push origin '
 
 # ================================

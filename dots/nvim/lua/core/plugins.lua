@@ -51,7 +51,7 @@ return require('packer').startup(function(use)
   use 'nvim-lua/plenary.nvim'
 
   --  ui enhancements
-  use 'romgrk/barbar.nvim'      
+  use {'romgrk/barbar.nvim'}
   use 'lewis6991/gitsigns.nvim' 
 
   use {
