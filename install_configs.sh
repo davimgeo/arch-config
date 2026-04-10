@@ -4,7 +4,7 @@ dependencies=(
   zoxide fzf curl 
   unzip tar cmake ripgrep
   npm build-essential pkg-config libtool 
-  libtool-bin autoconf automake g++ clangd
+  libtool-bin autoconf automake g++ clangd clang
 )
 
 OK="[ \033[1;32mOK\033[0m ]"

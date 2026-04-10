@@ -80,7 +80,6 @@ _G.packer_plugins = {
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
   ["barbar.nvim"] = {
-    config = { "\27LJ\2\n¤\1\0\0\5\0\f\0\0186\0\0\0009\0\1\0+\1\1\0=\1\2\0006\0\3\0'\2\4\0B\0\2\0029\0\5\0005\2\6\0B\0\2\0016\0\a\0006\2\0\0009\2\b\0029\2\t\2'\3\n\0'\4\v\0B\0\4\1K\0\1\0\n<C-l>\6n\bdel\vkeymap\npcall\1\0\1\15auto_setup\1\nsetup\vbarbar\frequire\22barbar_auto_setup\6g\bvim\0" },
     loaded = true,
     path = "/home/lum/.local/share/nvim/site/pack/packer/start/barbar.nvim",
     url = "https://github.com/romgrk/barbar.nvim"
@@ -212,10 +211,6 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: barbar.nvim
-time([[Config for barbar.nvim]], true)
-try_loadstring("\27LJ\2\n¤\1\0\0\5\0\f\0\0186\0\0\0009\0\1\0+\1\1\0=\1\2\0006\0\3\0'\2\4\0B\0\2\0029\0\5\0005\2\6\0B\0\2\0016\0\a\0006\2\0\0009\2\b\0029\2\t\2'\3\n\0'\4\v\0B\0\4\1K\0\1\0\n<C-l>\6n\bdel\vkeymap\npcall\1\0\1\15auto_setup\1\nsetup\vbarbar\frequire\22barbar_auto_setup\6g\bvim\0", "config", "barbar.nvim")
-time([[Config for barbar.nvim]], false)
 -- Config for: nvim-treesitter
 time([[Config for nvim-treesitter]], true)
 try_loadstring("\27LJ\2\n»\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\1\venable\2\21ensure_installed\1\0\2\14highlight\0\21ensure_installed\0\1\6\0\0\vpython\blua\ttoml\bcpp\tbash\nsetup\27nvim-treesitter.config\frequire\0", "config", "nvim-treesitter")

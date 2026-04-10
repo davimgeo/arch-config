@@ -1,4 +1,4 @@
-#!/bin/bash
+"../config/parameters.toml"#!/bin/bash
 
 OK="[ \033[1;32mOK\033[0m ]"
 FAILED="[ \033[1;31mFailed\033[0m ]"

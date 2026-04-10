@@ -2,6 +2,7 @@
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
     "actions": [],
+    "alwaysOnTop": false,
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
@@ -30,7 +31,7 @@
     {
         "defaults": 
         {
-            "opacity": 80,
+            "opacity": 90,
             "useAcrylic": false
         },
         "list": 
@@ -86,5 +87,7 @@
         ]
     },
     "schemes": [],
-    "themes": []
+    "showTabsInTitlebar": false,
+    "themes": [],
+    "windowingBehavior": "useExisting"
 }
