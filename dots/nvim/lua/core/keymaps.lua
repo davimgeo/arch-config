@@ -125,7 +125,24 @@ vim.keymap.set("t", "PO", [[<C-\><C-n><C-w>l]], { silent = true })
 vim.keymap.set("n", "K", "2k")
 vim.keymap.set("n", "J", "2j")
 
+-- navigate tabs through alt + 1...9
 for i = 1, 9 do
   vim.keymap.set(modes, "<M-" .. i .. ">", i .. "gt", { silent = true })
 end
 
+-- save/load session
+local session_path = vim.fn.stdpath("config") .. "/session/session.vim"
+
+vim.keymap.set("n", "<Home>", function ()
+  vim.cmd("mksession! " .. session_path)
+  vim.notify("Session saved in " .. session_path, vim.log.levels.INFO)
+end, {})
+
+vim.keymap.set("n", "<End>", function ()
+  vim.cmd("source " .. session_path)
+  vim.notify("Session loaded from " .. session_path, vim.log.levels.INFO)
+end, {})
+
+-- checkmark
+vim.keymap.set("i", "<C-k>c", "✅")
+vim.keymap.set("i", "<C-k>x", "❌")
