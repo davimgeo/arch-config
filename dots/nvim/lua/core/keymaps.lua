@@ -133,13 +133,29 @@ end
 -- save/load session
 local session_path = vim.fn.stdpath("config") .. "/session/session.vim"
 
+-- SAVE SESSION
 vim.keymap.set("n", "<Home>", function ()
+  -- 1. Close NvimTree (avoid broken layout)
+  pcall(vim.cmd, "NvimTreeClose")
+
+  -- 2. Save session
   vim.cmd("mksession! " .. session_path)
+
+  -- 3. Notify
   vim.notify("Session saved in " .. session_path, vim.log.levels.INFO)
 end, {})
 
+-- LOAD SESSION
 vim.keymap.set("n", "<End>", function ()
+  -- 1. Load session
   vim.cmd("source " .. session_path)
+
+  -- 2. Reopen NvimTree safely
+  vim.schedule(function()
+    pcall(vim.cmd, "NvimTreeOpen")
+  end)
+
+  -- 3. Notify
   vim.notify("Session loaded from " .. session_path, vim.log.levels.INFO)
 end, {})
 

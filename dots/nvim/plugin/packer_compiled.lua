@@ -79,6 +79,15 @@ _G.packer_plugins = {
     path = "/home/lum/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["auto-session"] = {
+    commands = { "SaveSession", "RestoreSession" },
+    config = { "\27LJ\2\nÿ\2\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\22post_restore_cmds\1\2\0\0\26tabdo NvimTreeRefresh\18pre_save_cmds\1\2\0\0\24tabdo NvimTreeClose\1\0\t\31auto_session_suppress_dirs\0\25auto_restore_enabled\1\22auto_save_enabled\1\25auto_session_enabled\1\26auto_session_root_dir\28~/.config/nvim/session/%auto_session_enable_last_session\2\14log_level\tinfo\22post_restore_cmds\0\18pre_save_cmds\0\nsetup\17auto-session\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/lum/.local/share/nvim/site/pack/packer/opt/auto-session",
+    url = "https://github.com/rmagatti/auto-session"
+  },
   ["barbar.nvim"] = {
     loaded = true,
     path = "/home/lum/.local/share/nvim/site/pack/packer/start/barbar.nvim",
@@ -163,7 +172,7 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-tree/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
-    config = { "\27LJ\2\n»\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\1\venable\2\21ensure_installed\1\0\2\14highlight\0\21ensure_installed\0\1\6\0\0\vpython\blua\ttoml\bcpp\tbash\nsetup\27nvim-treesitter.config\frequire\0" },
+    config = { "\27LJ\2\n»\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\1\venable\2\21ensure_installed\1\0\2\21ensure_installed\0\14highlight\0\1\6\0\0\vpython\blua\ttoml\bcpp\tbash\nsetup\27nvim-treesitter.config\frequire\0" },
     loaded = true,
     path = "/home/lum/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -213,8 +222,27 @@ _G.packer_plugins = {
 time([[Defining packer_plugins]], false)
 -- Config for: nvim-treesitter
 time([[Config for nvim-treesitter]], true)
-try_loadstring("\27LJ\2\n»\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\1\venable\2\21ensure_installed\1\0\2\14highlight\0\21ensure_installed\0\1\6\0\0\vpython\blua\ttoml\bcpp\tbash\nsetup\27nvim-treesitter.config\frequire\0", "config", "nvim-treesitter")
+try_loadstring("\27LJ\2\n»\1\0\0\4\0\b\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\2B\0\2\1K\0\1\0\14highlight\1\0\1\venable\2\21ensure_installed\1\0\2\21ensure_installed\0\14highlight\0\1\6\0\0\vpython\blua\ttoml\bcpp\tbash\nsetup\27nvim-treesitter.config\frequire\0", "config", "nvim-treesitter")
 time([[Config for nvim-treesitter]], false)
+
+-- Command lazy-loads
+time([[Defining lazy-load commands]], true)
+pcall(vim.api.nvim_create_user_command, 'RestoreSession', function(cmdargs)
+          require('packer.load')({'auto-session'}, { cmd = 'RestoreSession', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+        end,
+        {nargs = '*', range = true, bang = true, complete = function()
+          require('packer.load')({'auto-session'}, {}, _G.packer_plugins)
+          return vim.fn.getcompletion('RestoreSession ', 'cmdline')
+      end})
+pcall(vim.api.nvim_create_user_command, 'SaveSession', function(cmdargs)
+          require('packer.load')({'auto-session'}, { cmd = 'SaveSession', l1 = cmdargs.line1, l2 = cmdargs.line2, bang = cmdargs.bang, args = cmdargs.args, mods = cmdargs.mods }, _G.packer_plugins)
+        end,
+        {nargs = '*', range = true, bang = true, complete = function()
+          require('packer.load')({'auto-session'}, {}, _G.packer_plugins)
+          return vim.fn.getcompletion('SaveSession ', 'cmdline')
+      end})
+time([[Defining lazy-load commands]], false)
+
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
