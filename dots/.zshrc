@@ -116,6 +116,8 @@ alias uzsh="source ~/.zshrc"
 # Neovim
 alias cnvim="nvim ~/.config/nvim/"
 
+alias carch="nvim ~/arch-config/"
+
 # Alacritty
 alias cala="sudo nvim ~/.config/alacritty/alacritty.toml"
 

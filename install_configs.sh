@@ -45,6 +45,7 @@ function install_dependencies() {
   sudo apt install -y "${missing[@]}" || error "Could not install dependencies"
 
   printf "%b Dependencies installed successfully.\n" "$OK"
+}
 
 function install_nvim() {
 

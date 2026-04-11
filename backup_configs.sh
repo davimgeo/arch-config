@@ -1,17 +1,9 @@
 #!/bin/bash
-# *****************
-# Backup dotfiles
-# *****************
 
-# array of configs in .config dir 
-CONFIG_DIRS=(
-  i3 nvim alacritty
-)
+OK="[ \033[1;32mOK\033[0m ]"
+FAILED="[ \033[1;31mFailed\033[0m ]"
 
-# array of configs in home dir
-HOME_DIRS=(
-  .zshrc .zprofile .xinitrc
-)
+OUTPUT_PATH="$HOME/arch-config/dots/"
 
 function error() {
   local text="$1"
@@ -19,44 +11,47 @@ function error() {
   exit 1
 }
 
-OK="[ \033[1;32mOK\033[0m ]"
-FAILED="[ \033[1;31mFailed\033[0m ]"
+function copy() {
+  local SRC="$1"
+  local NAME="$2"
+  local confirm
 
-function backup_zsh()
-{
-  echo -n "Do you want to backup zsh? (Y/N): "
-  read confirm_backup
+  echo -n "Do you want to backup $NAME? (Y/N): "
+  read confirm
 
-  if [[ $confirm_backup == [nN] || $confirm_backup == [nN][oO] ]]; then
-      echo "Skipping zsh backup..."
-      return
+  if [[ "$confirm" =~ ^([yY]|[yY][eE][sS])$ ]]; then
+      cp -r "$SRC" "$OUTPUT_PATH" || error "Copying $NAME failed"
+      printf "%b Copied $NAME successfully\n" "$OK"
   else
-      echo "Continuing..."
+      echo "Skipping $NAME..."
   fi
-
-  printf "Copying zsh into arch_config/dots...\n"
-  cp -r ~/.zshrc ~/arch-config/dots/ || error "%b Copying zsh into arch_config/dots failed\n" 
-
-  printf "%b Copied zsh into arch_config successfully.\n" "$OK"
 }
 
-function backup_nvim()
-{
-  echo -n "Do you want to backup nvim? (Y/N): "
-  read confirm_backup
+function backup() {
+  local -n SOURCES_REF=$1
+  local -n NAMES_REF=$2
 
-  if [[ $confirm_backup == [nN] || $confirm_backup == [nN][oO] ]]; then
-      echo "Skipping nvim backup..."
-      return
-  else
-      echo "Continuing..."
-  fi
-
-  printf "Copying nvim into arch_config...\n"
-  cp -r ~/.config/nvim/ ~/arch-config/dots/ || error "%b Copying nvim into arch_config failed\n" 
-
-  printf "%b Copied nvim into arch_config successfully.\n" "$OK"
+  for i in "${!SOURCES_REF[@]}"; do
+    copy "${SOURCES_REF[$i]}" "${NAMES_REF[$i]}"
+  done
 }
 
-backup_zsh
-backup_nvim
+SOURCES=(
+  "$HOME/.zshrc"
+  "$HOME/.config/nvim"
+  "$HOME/.config/i3"
+  "$HOME/.config/picom.conf"
+  "$HOME/.config/kitty"
+  "$HOME/.config/polybar"
+)
+
+NAMES=(
+  "zsh"
+  "nvim"
+  "i3"
+  "picom"
+  "kitty"
+  "polybar"
+)
+
+backup SOURCES NAMES

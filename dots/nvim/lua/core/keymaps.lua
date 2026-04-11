@@ -73,7 +73,7 @@ function ToggleTerm()
     term_buf = nil
   else
     vim.cmd("botright vsplit")
-    vim.cmd("vertical resize 60")
+    vim.cmd("vertical resize 30")
 
     vim.cmd('terminal zsh -i -c "source ~/venv/bin/activate; exec zsh -i"')
 

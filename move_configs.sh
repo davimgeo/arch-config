@@ -1,4 +1,4 @@
-"../config/parameters.toml"#!/bin/bash
+#!/bin/bash
 
 OK="[ \033[1;32mOK\033[0m ]"
 FAILED="[ \033[1;31mFailed\033[0m ]"
@@ -9,33 +9,43 @@ function error() {
   exit 1
 }
 
-function move_config() {
-  NVIM_DIR="$HOME/.config"
+function copy() {
+  local DIR="$1"
+  local PROP="$2"
+  local confirm
 
-  echo -n "Do you want to move nvim to $NVIM_DIR? (Y/N): "
-  read confirm_nvim
+  echo -n "Do you want to move $PROP to $DIR? (Y/N): "
+  read confirm
 
-  if [[ "$confirm_nvim" =~ ^([yY]|[yY][eE][sS])$ ]]; then
-      cp -r dots/nvim "$NVIM_DIR" || error "Could not move nvim to $NVIM_DIR"
+  if [[ "$confirm" =~ ^([yY]|[yY][eE][sS])$ ]]; then
+      cp -r "dots/$PROP" "$DIR" || error "Could not move $PROP to $DIR"
+      printf "%b Copied $PROP successfully\n" "$OK"
   else
-      echo "Skipping moving nvim"
+      echo "Skipping moving $PROP"
   fi
-
-  printf "%b Copied neovim sucessfully\n" "$OK"
-
-
-  ZSH_DIR="$HOME"
-
-  echo -n "Do you want to move .zshrc to $ZSH_DIR? (Y/N): "
-  read confirm_zsh
-
-  if [[ "$confirm_zsh" =~ ^([yY]|[yY][eE][sS])$ ]]; then
-      cp dots/.zshrc "$ZSH_DIR" || error "Could not move zshrc to $ZSH_DIR"
-  else
-      echo "Skipping moving zshrc"
-  fi
-
-  printf "%b Copied .zshrc sucessfully\n" "$OK"
 }
 
-move_config
+function install() {
+  local -n DIRS_REF=$1
+  local -n PROGRAMS_REF=$2
+
+  for i in "${!PROGRAMS_REF[@]}"; do
+    copy "${DIRS_REF[$i]}" "${PROGRAMS_REF[$i]}"
+  done
+}
+
+DIRS=(
+  "$HOME/.config/"
+  "$HOME"
+  "$HOME/.config/"
+  "$HOME/.config"
+  "$HOME/.config"
+)
+
+PROGRAMS=(
+  "nvim" ".zshrc" "i3"
+  "polybar" "picom.conf"
+)
+
+install "${DIRS[@]}" "${PROGRAMS[@]}"
+install DIRS PROGRAMS

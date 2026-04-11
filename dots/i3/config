@@ -5,14 +5,24 @@ set $mod Mod4
 gaps inner 3
 gaps outer 3
 
+# hdmi
+exec_always --no-startup-id sleep 2 ~/.screenlayout/screenlayout.sh
+
+# start polybar
+exec --no-startup-id polybar &
+
+# start picom
+exec --no-startup-id picom -b
+
 # Set wallpaper
 exec_always feh --bg-scale ~/wallpapers/lainblack.jpg
 
 # Take Screenshot
-bindsym Print exec flameshot & disown && flameshot gui
+bindsym $mod+Shift+s exec flameshot gui
+#bindsym Home exec flameshot & disown && flameshot gui
 
 # Open Signal
-bindsym $mod+Shift+s exec signal-desktop
+#bindsym $mod+Shift+s exec signal-desktop
 
 # Open File Manager
 bindsym $mod+Shift+f exec thunar
@@ -58,7 +68,8 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+#bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+q kill
