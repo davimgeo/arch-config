@@ -112,8 +112,8 @@ end
 
 local modes = { "n", "i", "v" }
 
-vim.keymap.set(modes, "<Tab>n", tab_n, { silent = true })
-vim.keymap.set(modes, "<Tab>p", tab_p, { silent = true })
+--vim.keymap.set(modes, "<Tab>n", tab_n, { silent = true })
+--vim.keymap.set(modes, "<Tab>p", tab_p, { silent = true })
 
 vim.keymap.set(modes, "QW", "<C-w>h", { silent = true })
 vim.keymap.set(modes, "PO", "<C-w>l", { silent = true })
