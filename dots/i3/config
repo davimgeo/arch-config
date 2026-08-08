@@ -24,7 +24,8 @@ bindsym Mod1+Shift+1 focus output eDP-2
 bindsym Mod1+Shift+2 focus output HDMI-1-1
 
 # start polybar
-exec --no-startup-id polybar &
+#exec --no-startup-id polybar &
+exec --no-startup-id bash ~/.config/polybar/launch.sh --cuts
 
 # start picom
 exec --no-startup-id picom -b
