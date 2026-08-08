@@ -6,10 +6,12 @@ gaps inner 0
 gaps outer 0
 
 # hdmi
-exec_always --no-startup-id bash -c "sleep 2 && ~/.screenlayout/screenlayout.sh"
+exec_always --no-startup-id bash -c "sleep 2 && xrandr \
+  --output eDP-1 --mode 1920x1080 --pos 0x0 \
+  --output HDMI-1-0 --mode 1920x1080 --rate 60 --primary --pos 1920x0
 
 # animated wallpaper
-exec_always --no-startup-id sleep 2 && xwinwrap -b -s -fs -st -sp -nf -ov -fdt -- \ mpv --vo=x11 -wid WID --really-quiet --loop=inf --no-audio \ --osc=no --input-cursor=no --input-default-bindings=no \ ~/apps/Hidamari/frieren-frosty-morning.1920x1080.mp4
+#exec_always --no-startup-id sleep 2 && xwinwrap -b -s -fs -st -sp -nf -ov -fdt -- \ mpv --vo=x11 -wid WID --really-quiet --loop=inf --no-audio \ --osc=no --input-cursor=no --input-default-bindings=no \ ~/apps/Hidamari/frieren-frosty-morning.1920x1080.mp4
 
 # =========================
 # Monitor focus
@@ -28,7 +30,7 @@ exec --no-startup-id polybar &
 exec --no-startup-id picom -b
 
 # Set wallpaper
-#exec_always feh --bg-scale ~/wallpapers/lainblack.jpg
+exec_always feh --bg-scale ~/wallpapers/lainblack.jpg
 
 # enable matplotlib to have floating window
 for_window [title="^Figure"] floating enable
