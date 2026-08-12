@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dependencies=(
-  zoxide fzf curl gzip 
+  zoxide fzf curl gzip libfftw3-dev python3-dev
   unzip tar cmake ripgrep curl
   npm build-essential pkg-config libtool 
   libtool-bin autoconf automake g++ clangd clang cargo
