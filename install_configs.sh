@@ -1,10 +1,11 @@
 #!/bin/bash
 
 dependencies=(
-  zoxide fzf curl 
-  unzip tar cmake ripgrep
+  zoxide fzf curl gzip 
+  unzip tar cmake ripgrep curl
   npm build-essential pkg-config libtool 
-  libtool-bin autoconf automake g++ clangd clang
+  libtool-bin autoconf automake g++ clangd clang cargo
+  tree-sitter-cli xclip
 )
 
 OK="[ \033[1;32mOK\033[0m ]"
@@ -94,6 +95,7 @@ function install_nvim() {
   git clone --depth 1 https://github.com/wbthomason/packer.nvim "$PACKER_DIR" \
     || error "Packer installation failed"
 
+  find ~/.local/share/nvim/site/pack/packer/start/packer.nvim/lua/packer.lua -type f -exec grep -l 'tbl_islist' {} \; -exec sed -i 's/tbl_islist/islist/g' {} \;
   echo "Running PackerSync..."
   nvim --headless +PackerSync +qa || error "PackerSync failed"
   printf "%b PackerSync completed successfully\n" "$OK"
